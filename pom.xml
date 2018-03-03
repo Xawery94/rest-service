@@ -40,7 +40,6 @@
 			<version>1.10.4.RELEASE</version>
 		</dependency>
 	-->
-
 	</dependencies>
 
 	<build>
