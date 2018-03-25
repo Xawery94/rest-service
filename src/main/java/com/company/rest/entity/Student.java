@@ -4,16 +4,26 @@ import java.util.Date;
 
 public class Student {
 
-    private int index;
+    private String index;
     private String name;
     private String lastName;
     private Date birthday;
 
-    public int getIndex() {
+    public Student() {
+    }
+
+    public Student(String index, String name, String lastName, Date birthday) {
+        this.index = index;
+        this.name = name;
+        this.lastName = lastName;
+        this.birthday = birthday;
+    }
+
+    public String getIndex() {
         return index;
     }
 
-    public void setIndex(int index) {
+    public void setIndex(String index) {
         this.index = index;
     }
 

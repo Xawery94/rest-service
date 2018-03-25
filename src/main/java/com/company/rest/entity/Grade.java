@@ -8,6 +8,12 @@ public class Grade {
     private Date date;
     private int studentIndex;
 
+    public Grade(double mark, Date date, int studentIndex) {
+        this.mark = mark;
+        this.date = date;
+        this.studentIndex = studentIndex;
+    }
+
     public double getMark() {
         return mark;
     }

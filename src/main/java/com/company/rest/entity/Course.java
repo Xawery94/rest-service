@@ -6,6 +6,12 @@ public class Course {
     private String teacher;
     private Grade[] grade;
 
+    public Course(String name, String teacher, Grade[] grade) {
+        this.name = name;
+        this.teacher = teacher;
+        this.grade = grade;
+    }
+
     public String getName() {
         return name;
     }
