@@ -6,6 +6,9 @@ public class Course {
     private String teacher;
     private Grade[] grade;
 
+    public Course() {
+    }
+
     public Course(String name, String teacher, Grade[] grade) {
         this.name = name;
         this.teacher = teacher;
@@ -16,23 +19,11 @@ public class Course {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getTeacher() {
         return teacher;
     }
 
-    public void setTeacher(String teacher) {
-        this.teacher = teacher;
-    }
-
     public Grade[] getGrade() {
         return grade;
-    }
-
-    public void setGrade(Grade[] grade) {
-        this.grade = grade;
     }
 }

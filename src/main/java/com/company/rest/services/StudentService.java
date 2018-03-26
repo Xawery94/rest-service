@@ -1,11 +1,9 @@
-package com.company.rest.service;
+package com.company.rest.services;
 
 import com.company.rest.entity.Student;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface StudentService {
 
     List<Student> getAllStudents();

@@ -1,11 +1,12 @@
 package com.company.rest.controllers;
 
 import com.company.rest.entity.Student;
-import com.company.rest.service.StudentService;
+import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -26,13 +27,13 @@ public class StudentController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}")
     @ResponseStatus(HttpStatus.OK)
-    public Student getStudent(@PathVariable String index){
+    public Student getStudent(@PathVariable String index) {
         return studentService.getStudent(index);
     }
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addStudent(@RequestBody Student body) {
+    public void addStudent(@RequestBody Student body) throws ParseException {
         studentService.addStudent(body);
     }
 
