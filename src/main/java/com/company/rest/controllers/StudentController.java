@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.List;
 
 @RestController
@@ -33,8 +32,13 @@ public class StudentController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void addStudent(@RequestBody Student body) throws ParseException {
+    public void addStudent(@RequestBody Student body) {
         studentService.addStudent(body);
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{index}")
+    public void deleteStudent(@PathVariable String index) {
+        studentService.deleteStudent(index);
     }
 
 }

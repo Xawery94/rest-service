@@ -23,14 +23,14 @@ public class Repository {
     }
 
     public void initRepository() {
-        try {
+       /* try {
         student.add(new Student("123456", "Ala", "Kot", sdf.parse("10 20 2012")));
         student.add(new Student("534554", "Ola", "Puszka", sdf.parse("11 21 2013")));
         student.add(new Student("222222", "Pawel", "Wrona", sdf.parse("12 22 2014")));
         student.add(new Student("866456", "Adam", "Paczka", sdf.parse("13 23 2015")));
         } catch (ParseException exc) {
             System.err.println(exc.getMessage());
-        }
+        }*/
     }
 
     public List<Student> getAllStudents() {
@@ -47,6 +47,6 @@ public class Repository {
     }
 
     public void addStudent(Student body) {
-        student.add(new Student(body.getIndex(), body.getName(), body.getLastName(), body.getBirthday()));
+       // student.add(new Student(body.getIndex(), body.getName(), body.getLastName(), body.getBirthday()));
     }
 }

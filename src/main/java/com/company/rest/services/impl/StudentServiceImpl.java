@@ -2,6 +2,8 @@ package com.company.rest.services.impl;
 
 import com.company.rest.dao.StudentRepository;
 import com.company.rest.entity.Student;
+import com.company.rest.exceptions.StudentDataExceptions;
+import com.company.rest.exceptions.StudentDeleteException;
 import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,19 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void addStudent(Student body) {
+        if (body.getIndex() == null || body.getName() == null || body.getLastName() == null || body.getBirthday().toString() == null) {
+            throw new StudentDataExceptions();
+        }
+
         studentRepository.save(body);
+    }
+
+    @Override
+    public void deleteStudent(String index) {
+        if (index != null) {
+            studentRepository.deleteByIndex(index);
+        } else {
+            throw new StudentDeleteException();
+        }
     }
 }

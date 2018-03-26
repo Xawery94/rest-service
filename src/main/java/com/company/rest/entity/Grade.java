@@ -1,20 +1,31 @@
 package com.company.rest.entity;
 
+import org.springframework.data.annotation.Id;
+
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Grade {
 
+    @Id
+    @NotNull
+    private int id;
     private double mark;
     private Date date;
-    private int studentIndex;
+    private Student student;
 
     public Grade() {
     }
 
-    public Grade(double mark, Date date, int studentIndex) {
+    public Grade(int id, double mark, Date date, Student student) {
+        this.id = id;
         this.mark = mark;
         this.date = date;
-        this.studentIndex = studentIndex;
+        this.student = student;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public void setMark(double mark) {
@@ -25,7 +36,7 @@ public class Grade {
         this.date = date;
     }
 
-    public void setStudentIndex(int studentIndex) {
-        this.studentIndex = studentIndex;
+    public Student getStudent() {
+        return student;
     }
 }
