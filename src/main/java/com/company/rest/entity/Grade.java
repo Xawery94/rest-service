@@ -1,15 +1,10 @@
 package com.company.rest.entity;
 
-import org.springframework.data.annotation.Id;
-
-import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.Date;
 
-public class Grade {
+public class Grade implements Serializable {
 
-    @Id
-    @NotNull
-    private int id;
     private double mark;
     private Date date;
     private Student student;
@@ -17,15 +12,22 @@ public class Grade {
     public Grade() {
     }
 
-    public Grade(int id, double mark, Date date, Student student) {
-        this.id = id;
+    public Grade(double mark, Date date, Student student) {
         this.mark = mark;
         this.date = date;
         this.student = student;
     }
 
-    public int getId() {
-        return id;
+    public double getMark() {
+        return mark;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public Student getStudent() {
+        return student;
     }
 
     public void setMark(double mark) {
@@ -36,7 +38,7 @@ public class Grade {
         this.date = date;
     }
 
-    public Student getStudent() {
-        return student;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }

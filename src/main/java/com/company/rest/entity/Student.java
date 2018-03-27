@@ -1,6 +1,5 @@
 package com.company.rest.entity;
 
-import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
@@ -12,7 +11,7 @@ public class Student {
 
     @Id
     @NotNull(message = "User's index must not be null")
-    @Size(min = 6, max = 10)
+    @Size(min = 6)
     private String index;
     private String name;
     private String lastName;
@@ -22,12 +21,11 @@ public class Student {
     public Student() {
     }
 
-    public Student(String index, String name, String lastName, Date birthday, List<Course> courses) {
+    public Student(String index, String name, String lastName, Date birthday) {
         this.index = index;
         this.name = name;
         this.lastName = lastName;
         this.birthday = birthday;
-        this.courses = courses;
     }
 
     public String getIndex() {
@@ -48,5 +46,9 @@ public class Student {
 
     public List<Course> getCourses() {
         return courses;
+    }
+
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
     }
 }
