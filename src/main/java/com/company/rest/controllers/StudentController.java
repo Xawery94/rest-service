@@ -1,7 +1,9 @@
 package com.company.rest.controllers;
 
 import com.company.rest.entity.Course;
+import com.company.rest.entity.Grade;
 import com.company.rest.entity.Student;
+import com.company.rest.services.CourseService;
 import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,10 +17,12 @@ import java.util.Optional;
 public class StudentController {
 
     private StudentService studentService;
+    private CourseService courseService;
 
     @Autowired
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, CourseService courseService) {
         this.studentService = studentService;
+        this.courseService = courseService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -54,4 +58,8 @@ public class StudentController {
         return studentService.getCourseForStudent(index, name);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "/{index}/courses/{name}/grades")
+    public void insertGrade(@PathVariable String index, @PathVariable String name, @RequestBody Grade grade) {
+        studentService.addNewGrade(index, name, grade);
+    }
 }

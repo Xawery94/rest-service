@@ -1,21 +1,20 @@
 package com.company.rest.entity;
 
-import java.io.Serializable;
 import java.util.Date;
 
-public class Grade implements Serializable {
+public class Grade {
 
     private double mark;
     private Date date;
-    private Student student;
+    private String index;
 
     public Grade() {
     }
 
-    public Grade(double mark, Date date, Student student) {
+    public Grade(double mark, String index) {
         this.mark = mark;
-        this.date = date;
-        this.student = student;
+        this.date = new Date();
+        this.index = index;
     }
 
     public double getMark() {
@@ -26,10 +25,6 @@ public class Grade implements Serializable {
         return date;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
     public void setMark(double mark) {
         this.mark = mark;
     }
@@ -38,7 +33,11 @@ public class Grade implements Serializable {
         this.date = date;
     }
 
-    public void setStudent(Student student) {
-        this.student = student;
+    public String getIndex() {
+        return index;
+    }
+
+    public void setIndex(String index) {
+        this.index = index;
     }
 }

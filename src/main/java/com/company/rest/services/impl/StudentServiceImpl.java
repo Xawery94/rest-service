@@ -1,7 +1,9 @@
 package com.company.rest.services.impl;
 
+import com.company.rest.dao.CourseRepository;
 import com.company.rest.dao.StudentRepository;
 import com.company.rest.entity.Course;
+import com.company.rest.entity.Grade;
 import com.company.rest.entity.Student;
 import com.company.rest.exceptions.StudentCourseFoundException;
 import com.company.rest.exceptions.StudentDataExceptions;
@@ -11,6 +13,8 @@ import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +22,7 @@ import java.util.Optional;
 public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
     private CourseService courseService;
 
     @Autowired
@@ -42,8 +47,8 @@ public class StudentServiceImpl implements StudentService {
             throw new StudentDataExceptions();
         }
 
-        List<Course> courseList = courseService.getAllCourses();
-        body.setCourses(courseList);
+        //List<Course> courseList = courseService.getAllCourses();
+        //body.setCourses(courseList);
         studentRepository.save(body);
     }
 
@@ -60,12 +65,12 @@ public class StudentServiceImpl implements StudentService {
     public void addNewCourse(String index, List<Course> course) {
         if (index != null) {
             Student student = studentRepository.findOneByIndex(index);
+            List<Course> courseList = student.getCourses();
 
-            if (student.getCourses() == null) {
+            if (courseList == null) {
                 student.setCourses(course);
                 studentRepository.save(student);
             } else {
-                List<Course> courseList = student.getCourses();
                 courseList.addAll(course);
                 student.setCourses(courseList);
                 studentRepository.save(student);
@@ -89,9 +94,30 @@ public class StudentServiceImpl implements StudentService {
             } else {
                 return foundCourse;
             }
-            /*return student.getCourses().stream()
-                    .filter(course -> course.getName().equals(name))
-                    .collect(Collectors.toList());*/
+        } else {
+            throw new StudentDataExceptions();
+        }
+
+    }
+
+    @Override
+    public void addNewGrade(String index, String name, Grade grade) {
+        if (index != null) {
+            Course course = courseService.getCourse(name);
+            Grade gradeObj = new Grade(grade.getMark(), index);
+
+            List<Grade> gradeList = course.getGrade();
+
+            if (gradeList == null) {
+                List<Grade> gradeList2 = new ArrayList<>();
+                gradeList2.add(gradeObj);
+                course.setGrade(gradeList2);
+                courseService.saveGradeInCourse(course);
+            } else {
+                gradeList.add(gradeObj);
+                course.setGrade(gradeList);
+                courseService.saveGradeInCourse(course);
+            }
         } else {
             throw new StudentDataExceptions();
         }

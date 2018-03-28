@@ -1,9 +1,14 @@
 package com.company.rest.entity;
 
+import org.springframework.data.annotation.Id;
+
+import java.math.BigInteger;
 import java.util.List;
 
 public class Course {
 
+    @Id
+    private BigInteger id;
     private String name;
     private String teacher;
     private List<Grade> grade;
@@ -11,9 +16,18 @@ public class Course {
     public Course() {
     }
 
-    public Course(String name, String teacher) {
+    public Course(BigInteger id, String name, String teacher) {
+        this.id = id;
         this.name = name;
         this.teacher = teacher;
+    }
+
+    public BigInteger getId() {
+        return id;
+    }
+
+    public void setId(BigInteger id) {
+        this.id = id;
     }
 
     public String getName() {
