@@ -7,7 +7,7 @@ public class SmallCourse {
     private String id;
     private String name;
     private String teacher;
-    private List<SmallGrade> grade;
+    ///private List<SmallGrade> grade;
 
     public SmallCourse() {
     }
@@ -43,11 +43,11 @@ public class SmallCourse {
         this.teacher = teacher;
     }
 
-    public List<SmallGrade> getGrade() {
+    /*public List<SmallGrade> getGrade() {
         return grade;
     }
 
     public void setGrade(List<SmallGrade> grade) {
         this.grade = grade;
-    }
+    }*/
 }

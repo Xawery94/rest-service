@@ -13,14 +13,16 @@ public class SmallGrade {
 
 //    @JsonIgnore
     private String student;
+    private String courseName;
 
     public SmallGrade() {
     }
 
-    public SmallGrade(double mark, Date date, String student) {
+    public SmallGrade(double mark, Date date, String student, String courseName) {
         this.mark = mark;
         this.date = date;
         this.student = student;
+        this.courseName = courseName;
     }
 
     public double getMark() {
@@ -45,5 +47,13 @@ public class SmallGrade {
 
     public String getStudent() {
         return student;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

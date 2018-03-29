@@ -25,6 +25,11 @@ public class SmallStudentController {
         return studentService.retrieveAllStudents();
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}")
+    public SmallStudent retrieveStudent(@PathVariable String index) {
+        return studentService.retrieveStudent(index);
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses")
     public List<SmallCourse> retrieveCoursesForStudent(@PathVariable String index) {
         return studentService.retrieveCourses(index);
@@ -50,6 +55,16 @@ public class SmallStudentController {
     public SmallCourse retrieveDetailsForCourse(@PathVariable String index,
                                                 @PathVariable String courseId) {
         return studentService.retrieveCourse(index, courseId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseId}/grades")
+    public List<SmallGrade> retrieveAllGradeForCourse(@PathVariable String index, @PathVariable String courseId) {
+        return studentService.retrieveGrade(index, courseId);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseId}/grades/{value}")
+    public List<SmallGrade> retrieveAllGradeForCourse(@PathVariable String index, @PathVariable String courseId, @PathVariable double value) {
+        return studentService.getOneGrade(index, courseId, value);
     }
 
 }
