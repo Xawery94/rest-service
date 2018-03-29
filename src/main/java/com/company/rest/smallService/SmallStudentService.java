@@ -4,10 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -22,11 +19,6 @@ public class SmallStudentService {
         SmallCourse course2 = new SmallCourse("Course2", "Spring MVC", "Examples");
         SmallCourse course3 = new SmallCourse("Course3", "Spring Boot", "Stude");
         SmallCourse course4 = new SmallCourse("Course4", "Maven", "Most popular");
-
-        courseList.add(course1);
-        courseList.add(course2);
-        courseList.add(course3);
-        courseList.add(course4);
 
         SmallStudent student1 = new SmallStudent(
                 "123456",
@@ -60,12 +52,14 @@ public class SmallStudentService {
         gradeList.add(grade11);
         gradeList.add(grade12);
         gradeList.add(grade13);
-//        gradeList.add(grade14);
-
         gradeList.add(grade21);
-//        gradeList.add(grade22);
         gradeList.add(grade23);
         gradeList.add(grade24);
+
+        courseList.add(course1);
+        courseList.add(course2);
+        courseList.add(course3);
+        courseList.add(course4);
 
     }
 
@@ -82,8 +76,8 @@ public class SmallStudentService {
         return null;
     }
 
-    public List<SmallCourse> retrieveCourses(String studentId) {
-        SmallStudent student = retrieveStudent(studentId);
+    public List<?> retrieveCourses(String index) {
+        SmallStudent student = retrieveStudent(index);
 
         if (student == null) {
             return null;
@@ -101,6 +95,16 @@ public class SmallStudentService {
 
         for (SmallCourse course : student.getCourses()) {
             if (course.getName().equals(courseName)) {
+
+                /*
+                final List<SmallGrade> grades = gradeList.stream()
+                        .filter(g -> g.getCourseName().equals(courseName))
+                        .filter(s -> s.getStudent().equals(student.getIndex()))
+                        .collect(Collectors.toList());
+                course.setGrade(grades);
+
+                */
+
                 return course;
             }
         }
@@ -171,10 +175,11 @@ public class SmallStudentService {
                 .collect(Collectors.toList());
 
 
-        if (grades == null){
+        if (grades == null) {
             return null;
         }
 
         return grades;
     }
+
 }

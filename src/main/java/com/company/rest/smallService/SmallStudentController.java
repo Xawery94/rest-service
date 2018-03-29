@@ -31,7 +31,7 @@ public class SmallStudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses")
-    public List<SmallCourse> retrieveCoursesForStudent(@PathVariable String index) {
+    public List<?> retrieveCoursesForStudent(@PathVariable String index) {
         return studentService.retrieveCourses(index);
     }
 
