@@ -51,15 +51,25 @@ public class SmallStudentController {
         return ResponseEntity.created(location).build();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseId}")
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}")
     public SmallCourse retrieveDetailsForCourse(@PathVariable String index,
-                                                @PathVariable String courseId) {
-        return studentService.retrieveCourse(index, courseId);
+                                                @PathVariable String courseName) {
+        return studentService.retrieveCourse(index, courseName);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseId}/grades")
-    public List<SmallGrade> retrieveAllGradeForCourse(@PathVariable String index, @PathVariable String courseId) {
-        return studentService.retrieveGrade(index, courseId);
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/grades")
+    public List<SmallGrade> retrieveAllGradesForStudents(@PathVariable String index){
+        return studentService.retrieveGradeForStudent(index);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/grades/{value}")
+    public List<SmallGrade> retrieveAllGradesForStudents(@PathVariable String index, @PathVariable double value){
+        return studentService.retrieveOneTypeGradeForStudent(index, value);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}/grades")
+    public List<SmallGrade> retrieveAllGradeForCourse(@PathVariable String index, @PathVariable String courseName) {
+        return studentService.retrieveGrade(index, courseName);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseId}/grades/{value}")

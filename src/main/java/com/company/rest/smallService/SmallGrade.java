@@ -1,7 +1,5 @@
 package com.company.rest.smallService;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Date;
@@ -18,9 +16,9 @@ public class SmallGrade {
     public SmallGrade() {
     }
 
-    public SmallGrade(double mark, Date date, String student, String courseName) {
+    public SmallGrade(double mark, String student, String courseName) {
         this.mark = mark;
-        this.date = date;
+        this.date = new Date();
         this.student = student;
         this.courseName = courseName;
     }

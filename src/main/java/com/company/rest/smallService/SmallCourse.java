@@ -7,7 +7,7 @@ public class SmallCourse {
     private String id;
     private String name;
     private String teacher;
-    ///private List<SmallGrade> grade;
+    //private List<SmallGrade> grade;
 
     public SmallCourse() {
     }

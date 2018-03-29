@@ -1,7 +1,5 @@
 package com.company.rest.smallService;
 
-import com.company.rest.entity.Course;
-import com.company.rest.entity.Grade;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;
@@ -17,19 +15,25 @@ public class SmallStudentService {
 
     private static List<SmallStudent> students = new ArrayList<>();
     private static List<SmallGrade> gradeList = new ArrayList<>();
+    private static List<SmallCourse> courseList = new ArrayList<>();
 
     static {
         SmallCourse course1 = new SmallCourse("Course1", "Spring", "Steps");
         SmallCourse course2 = new SmallCourse("Course2", "Spring MVC", "Examples");
-        SmallCourse course3 = new SmallCourse("Course3", "Spring Boot", "Studen");
+        SmallCourse course3 = new SmallCourse("Course3", "Spring Boot", "Stude");
         SmallCourse course4 = new SmallCourse("Course4", "Maven", "Most popular");
+
+        courseList.add(course1);
+        courseList.add(course2);
+        courseList.add(course3);
+        courseList.add(course4);
 
         SmallStudent student1 = new SmallStudent(
                 "123456",
                 "Ranga",
                 "Hiker",
                 new Date(),
-                new ArrayList<>(Arrays.asList(course1, course2, course3))
+                courseList
         );
 
         SmallStudent student2 = new SmallStudent(
@@ -37,30 +41,32 @@ public class SmallStudentService {
                 "Satish",
                 "Programmer",
                 new Date(),
-                new ArrayList<>(Arrays.asList(course1, course4))
+                courseList
         );
 
+        SmallGrade grade11 = new SmallGrade(2.0, student1.getIndex(), course1.getName());
+        SmallGrade grade12 = new SmallGrade(3.5, student1.getIndex(), course2.getName());
+        SmallGrade grade13 = new SmallGrade(3.5, student1.getIndex(), course3.getName());
+        SmallGrade grade14 = new SmallGrade(3.5, student1.getIndex(), course4.getName());
 
-        SmallGrade grade1 = new SmallGrade(2.0, new Date(), student1.getIndex(), course1.getName());
-        SmallGrade grade11 = new SmallGrade(3.5, new Date(), student1.getIndex(), course1.getName());
-        SmallGrade grade12 = new SmallGrade(3.5, new Date(), student1.getIndex(), course1.getName());
-        SmallGrade grade13 = new SmallGrade(3.5, new Date(), student1.getIndex(), course1.getName());
-        SmallGrade grade2 = new SmallGrade(3.0, new Date(), student1.getIndex(), course2.getName());
-        SmallGrade grade3 = new SmallGrade(5.0, new Date(), student1.getIndex(), course3.getName());
-        SmallGrade grade4 = new SmallGrade(4.5, new Date(), student2.getIndex(), course1.getName());
-        SmallGrade grade5 = new SmallGrade(3.5, new Date(), student2.getIndex(), course4.getName());
+        SmallGrade grade21 = new SmallGrade(3.0, student2.getIndex(), course1.getName());
+        SmallGrade grade22 = new SmallGrade(5.0, student2.getIndex(), course2.getName());
+        SmallGrade grade23 = new SmallGrade(4.5, student2.getIndex(), course3.getName());
+        SmallGrade grade24 = new SmallGrade(3.5, student2.getIndex(), course4.getName());
 
         students.add(student1);
         students.add(student2);
 
-        gradeList.add(grade1);
         gradeList.add(grade11);
         gradeList.add(grade12);
         gradeList.add(grade13);
-        gradeList.add(grade2);
-        gradeList.add(grade3);
-        gradeList.add(grade4);
-        gradeList.add(grade5);
+//        gradeList.add(grade14);
+
+        gradeList.add(grade21);
+//        gradeList.add(grade22);
+        gradeList.add(grade23);
+        gradeList.add(grade24);
+
     }
 
     public List<SmallStudent> retrieveAllStudents() {
@@ -86,7 +92,7 @@ public class SmallStudentService {
         return student.getCourses();
     }
 
-    public SmallCourse retrieveCourse(String studentId, String courseId) {
+    public SmallCourse retrieveCourse(String studentId, String courseName) {
         SmallStudent student = retrieveStudent(studentId);
 
         if (student == null) {
@@ -94,7 +100,7 @@ public class SmallStudentService {
         }
 
         for (SmallCourse course : student.getCourses()) {
-            if (course.getId().equals(courseId)) {
+            if (course.getName().equals(courseName)) {
                 return course;
             }
         }
@@ -122,8 +128,8 @@ public class SmallStudentService {
     public List<SmallGrade> retrieveGrade(String index, String courseName) {
         List<SmallGrade> grades = new ArrayList<>();
 
-        for (SmallGrade grade : gradeList){
-            if (grade.getStudent().equals(index) && grade.getCourseName().equals(courseName)){
+        for (SmallGrade grade : gradeList) {
+            if (grade.getStudent().equals(index) && grade.getCourseName().equals(courseName)) {
                 grades.add(grade);
             }
         }
@@ -131,17 +137,44 @@ public class SmallStudentService {
         return grades;
     }
 
-    public List<SmallGrade> getOneGrade(String index, String courseName,  double gradeValue){
+    public List<SmallGrade> getOneGrade(String index, String courseName, double gradeValue) {
         List<SmallGrade> grades = retrieveGrade(index, courseName);
         List<SmallGrade> gradesToReturn = new ArrayList<>();
 
-        for (SmallGrade grade: grades) {
+        for (SmallGrade grade : grades) {
 
-            if (grade.getMark() == gradeValue){
+            if (grade.getMark() == gradeValue) {
                 gradesToReturn.add(grade);
             }
         }
 
         return gradesToReturn;
+    }
+
+    public List<SmallGrade> retrieveGradeForStudent(String index) {
+        final List<SmallGrade> grades = gradeList.stream()
+                .filter(grade -> grade.getStudent().equals(index))
+                .collect(Collectors.toList());
+
+        if (grades == null) {
+            return null;
+        }
+
+        return grades;
+    }
+
+    public List<SmallGrade> retrieveOneTypeGradeForStudent(String index, double value) {
+        List<SmallGrade> gradesForStudent = retrieveGradeForStudent(index);
+
+        final List<SmallGrade> grades = gradesForStudent.stream()
+                .filter(grade -> grade.getMark() == value)
+                .collect(Collectors.toList());
+
+
+        if (grades == null){
+            return null;
+        }
+
+        return grades;
     }
 }
