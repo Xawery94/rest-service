@@ -7,14 +7,12 @@ import com.company.rest.entity.Student;
 import com.company.rest.exceptions.AddNewGradeException;
 import com.company.rest.exceptions.StudentDataExceptions;
 import com.company.rest.exceptions.StudentDeleteException;
-import com.company.rest.services.CourseService;
 import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +20,10 @@ import java.util.stream.Collectors;
 public class StudentServiceImpl implements StudentService {
 
     private StudentRepository studentRepository;
-    private CourseService courseService;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, CourseService courseService) {
+    public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.courseService = courseService;
     }
 
     @Override
@@ -145,7 +141,7 @@ public class StudentServiceImpl implements StudentService {
     public Grade addNewGrade(String index, String courseName, Grade gradeBody) {
         if (index != null) {
             Student student = studentRepository.findOneByIndex(index);
-            Grade grade = new Grade(gradeBody.getValue(), gradeBody.getCourseName());
+            Grade grade = new Grade(gradeBody.getValue(), courseName);
             List<Grade> gradeList = student.getGrades();
 
             double gradeValue = grade.getValue();
@@ -161,9 +157,70 @@ public class StudentServiceImpl implements StudentService {
             }
 
             studentRepository.save(student);
+
+            return grade;
         }
 
         return null;
+    }
+
+    @Override
+    public Course updateCourse(String index, String courseName, Course newCourse) {
+        if (index != null) {
+            Student student = studentRepository.findOneByIndex(index);
+
+            for (Course course : student.getCourses()) {
+                if (course.getName().equals(courseName)) {
+                    course.setName(newCourse.getName());
+                    course.setTeacher(newCourse.getTeacher());
+
+                    studentRepository.save(student);
+                    return course;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public Grade updateGrade(String index, String courseName, double value, Grade newGrade) {
+        if (index != null) {
+            Student student = studentRepository.findOneByIndex(index);
+
+            for (Grade grade : student.getGrades()) {
+                if (grade.getCourseName().equals(courseName) && grade.getValue() == value) {
+                    grade.setValue(newGrade.getValue());
+
+                    studentRepository.save(student);
+                    return grade;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public List<Grade> deleteGrade(String index, String courseName, double value) {
+        Student student = studentRepository.findOneByIndex(index);
+        if (student == null) {
+            return null;
+        }
+
+        List<Grade> gradeList = student.getGrades();
+
+        for (Grade grade : gradeList) {
+            if (grade.getCourseName().equals(courseName) && grade.getValue() == value) {
+                gradeList.remove(grade);
+
+                student.setGrades(gradeList);
+                studentRepository.save(student);
+                return gradeList;
+            }
+        }
+
+        return gradeList;
     }
 
     @Override
@@ -192,47 +249,4 @@ public class StudentServiceImpl implements StudentService {
         return list.stream().anyMatch(c -> c.getName().equals(name));
     }
 
-//    @Override
-//    public Optional<Course> getCourseForStudent(String index, String name) {
-//        if (index != null || name != null) {
-//            Student student = studentRepository.findOneByIndex(index);
-//
-//            final Optional<Course> foundCourse = student.getCourses().stream()
-//                    .filter(course -> course.getName().equals(name))
-//                    .findFirst();
-//
-//            if (!foundCourse.isPresent()) {
-//                throw new StudentCourseFoundException();
-//            } else {
-//                return foundCourse;
-//            }
-//        } else {
-//            throw new StudentDataExceptions();
-//        }
-//
-//    }
-//
-//    @Override
-//    public void addNewGradeaaa(String index, String name, Grade grade) {
-//        *//*if (index != null) {
-//            Course course = courseService.getCourse(name);
-//            Grade gradeObj = new Grade(grade.getValue(), index);
-//
-//            List<Grade> gradeList = course.getGrade();
-//
-//            if (gradeList == null) {
-//                List<Grade> gradeList2 = new ArrayList<>();
-//                gradeList2.add(gradeObj);
-//                course.setGrade(gradeList2);
-//                courseService.saveGradeInCourse(course);
-//            } else {
-//                gradeList.add(gradeObj);
-//                course.setGrade(gradeList);
-//                courseService.saveGradeInCourse(course);
-//            }
-//        } else {
-//            throw new StudentDataExceptions();
-//        }*//*
-//    }*/
-//
 }

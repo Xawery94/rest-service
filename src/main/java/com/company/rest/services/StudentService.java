@@ -31,4 +31,10 @@ public interface StudentService {
     Student deleteCourse(String index, String courseName);
 
     Grade addNewGrade(String index, String courseName, Grade grade);
+
+    Course updateCourse(String index, String courseName, Course newCourse);
+
+    Grade updateGrade(String index, String courseName, double value, Grade newGrade);
+
+    List<Grade> deleteGrade(String index, String courseName, double value);
 }

@@ -2,8 +2,6 @@ package com.company.rest.services.impl;
 
 import com.company.rest.dao.CourseRepository;
 import com.company.rest.entity.Course;
-import com.company.rest.entity.Grade;
-import com.company.rest.entity.Student;
 import com.company.rest.services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,8 +19,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void createNewCourse(Course course) {
+    public Course createNewCourse(Course course) {
         courseRepository.save(course);
+
+        return course;
     }
 
     @Override
@@ -35,22 +35,19 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository.findFirstByName(name);
     }
 
-    /*@Override
-    public void addNewGrade(String index, String name, Grade grade) {
-        Course course = courseRepository.findFirstByName(name);
-        List<Grade> gradeList = course.getGrade();
+    @Override
+    public Course updateCourse(String courseName, Course newCourse) {
+        Course course = courseRepository.findFirstByName(courseName);
+        course.setName(newCourse.getName());
+        course.setTeacher(newCourse.getTeacher());
 
-       // Student student =
-
-        if (gradeList != null) {
-            gradeList.add(grade);
-        }
-
-        course.setGrade(gradeList);
-    }*/
+        courseRepository.save(course);
+        return course;
+    }
 
     @Override
-    public void saveGradeInCourse(Course course) {
-        courseRepository.save(course);
+    public void deleteCourse(String courseName) {
+        courseRepository.deleteByName(courseName);
     }
+
 }
