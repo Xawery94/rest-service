@@ -1,19 +1,16 @@
 package com.company.rest.smallService;
 
-import java.util.List;
 
 public class SmallCourse {
 
     private String id;
     private String name;
     private String teacher;
-   // private List<SmallGrade> grade;
 
     public SmallCourse() {
     }
 
     public SmallCourse(String id, String name, String teacher) {
-        super();
         this.id = id;
         this.name = name;
         this.teacher = teacher;
@@ -42,13 +39,5 @@ public class SmallCourse {
     public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
-/*
-    public List<SmallGrade> getGrade() {
-        return grade;
-    }
 
-    public void setGrade(List<SmallGrade> grade) {
-        this.grade = grade;
-    }
-    */
 }

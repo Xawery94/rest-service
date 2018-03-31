@@ -1,43 +1,45 @@
 package com.company.rest.entity;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Grade {
 
-    private double mark;
+    @NotNull
+    private double value;
     private Date date;
-    private String index;
+    private String courseName;
 
     public Grade() {
     }
 
-    public Grade(double mark, String index) {
-        this.mark = mark;
+    public Grade(double value, String courseName) {
+        this.value = value;
         this.date = new Date();
-        this.index = index;
+        this.courseName = courseName;
     }
 
-    public double getMark() {
-        return mark;
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public void setMark(double mark) {
-        this.mark = mark;
-    }
-
     public void setDate(Date date) {
         this.date = date;
     }
 
-    public String getIndex() {
-        return index;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setIndex(String index) {
-        this.index = index;
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

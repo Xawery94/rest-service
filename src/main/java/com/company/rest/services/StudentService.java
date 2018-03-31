@@ -3,6 +3,7 @@ package com.company.rest.services;
 import com.company.rest.entity.Course;
 import com.company.rest.entity.Grade;
 import com.company.rest.entity.Student;
+import com.company.rest.smallService.SmallStudent;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,13 +14,23 @@ public interface StudentService {
 
     Student getStudent(String index);
 
-    void addStudent(Student body);
+    Student addStudent(Student body);
 
     void deleteStudent(String index);
 
-    void addNewCourse(String index, List<Course> course);
+    Course addNewCourse(String index, Course course);
 
-    Optional<Course> getCourseForStudent(String index, String name);
+    Student updateStudent(String index, Student student);
 
-    void addNewGrade(String index, String name, Grade grade);
+    List<Course> retrieveAllCourses(String index);
+
+    Course retrieveCourse(String index, String courseName);
+
+    List<Grade> retrieveGrade(String index, String courseName);
+
+    List<Grade> getOneGrade(String index, String courseId, double value);
+
+    Student deleteCourse(String index, String courseName);
+
+    Grade addNewGrade(String index, String courseName, Grade grade);
 }

@@ -25,6 +25,20 @@ public class SmallStudentController {
         return studentService.retrieveAllStudents();
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public SmallStudent addNewStudent(@RequestBody SmallStudent student){
+        studentService.addStudent(student);
+        return student;
+    }
+
+    @RequestMapping(method = RequestMethod.POST, value = "/{index}")
+    @ResponseStatus(HttpStatus.OK)
+    public SmallStudent updateStudent(@PathVariable String index, @RequestBody SmallStudent student){
+        studentService.updateStudent(index, student);
+        return student;
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "/{index}")
     public SmallStudent retrieveStudent(@PathVariable String index) {
         return studentService.retrieveStudent(index);

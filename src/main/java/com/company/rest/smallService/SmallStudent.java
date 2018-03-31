@@ -9,15 +9,17 @@ public class SmallStudent {
     private String name;
     private String lastName;
     private Date birthday;
+    private List<SmallGrade> grades;
     private List<SmallCourse> courses;
 
-    public SmallStudent(String index, String name, String lastName, Date birthday, List<SmallCourse> courses) {
-        super();
+    public SmallStudent() {
+    }
+
+    public SmallStudent(String index, String name, String lastName, Date birthday) {
         this.index = index;
         this.name = name;
         this.lastName = lastName;
         this.birthday = birthday;
-        this.courses = courses;
     }
 
     public String getIndex() {
@@ -50,6 +52,14 @@ public class SmallStudent {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<SmallGrade> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(List<SmallGrade> grades) {
+        this.grades = grades;
     }
 
     public List<SmallCourse> getCourses() {
