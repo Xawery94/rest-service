@@ -1,18 +1,16 @@
-package com.company.rest.entity;
+package com.company.rest.smallService;
 
-import org.springframework.data.annotation.Id;
 
-public class Course {
+public class SmallCourse {
 
-    @Id
     private String id;
     private String name;
     private String teacher;
 
-    public Course() {
+    public SmallCourse() {
     }
 
-    public Course(String id, String name, String teacher) {
+    public SmallCourse(String id, String name, String teacher) {
         this.id = id;
         this.name = name;
         this.teacher = teacher;
@@ -41,4 +39,5 @@ public class Course {
     public void setTeacher(String teacher) {
         this.teacher = teacher;
     }
+
 }

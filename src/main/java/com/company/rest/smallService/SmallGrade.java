@@ -1,30 +1,28 @@
-package com.company.rest.entity;
+package com.company.rest.smallService;
 
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-public class Grade {
+public class SmallGrade {
 
-    @NotNull
-    private double value;
+    private double mark;
     private Date date;
     private String courseName;
 
-    public Grade() {
+    public SmallGrade() {
     }
 
-    public Grade(double value, String courseName) {
-        this.value = value;
+    public SmallGrade(double mark, String courseName) {
+        this.mark = mark;
         this.date = new Date();
         this.courseName = courseName;
     }
 
-    public double getValue() {
-        return value;
+    public double getMark() {
+        return mark;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setMark(double mark) {
+        this.mark = mark;
     }
 
     public Date getDate() {
