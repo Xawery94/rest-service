@@ -3,10 +3,8 @@ package com.company.rest.services;
 import com.company.rest.entity.Course;
 import com.company.rest.entity.Grade;
 import com.company.rest.entity.Student;
-import com.company.rest.smallService.SmallStudent;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface StudentService {
 

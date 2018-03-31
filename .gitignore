@@ -1,5 +1,7 @@
-target/
-!.mvn/wrapper/maven-wrapper.jar
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+out
 
 ### STS ###
 .apt_generated
@@ -8,11 +10,12 @@ target/
 .project
 .settings
 .springBeans
+.sts4-cache
 
 ### IntelliJ IDEA ###
 .idea
 *.iws
-rest.iml
+*.iml
 *.ipr
 
 ### NetBeans ###

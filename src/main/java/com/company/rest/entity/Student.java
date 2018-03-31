@@ -1,14 +1,11 @@
 package com.company.rest.entity;
 
-import com.company.rest.smallService.SmallCourse;
-import com.company.rest.smallService.SmallGrade;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 public class Student {
 
@@ -79,24 +76,5 @@ public class Student {
     public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Student student = (Student) o;
-        return Objects.equals(index, student.index) &&
-                Objects.equals(name, student.name) &&
-                Objects.equals(lastName, student.lastName) &&
-                Objects.equals(birthday, student.birthday) &&
-                Objects.equals(grades, student.grades) &&
-                Objects.equals(courses, student.courses);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(index, name, lastName, birthday, grades, courses);
-    }
-
 
 }
