@@ -2,11 +2,9 @@ package com.company.rest.services.impl;
 
 import com.company.rest.dao.StudentRepository;
 import com.company.rest.entity.Student;
-import com.company.rest.services.StudentService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -14,13 +12,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class StudentServiceImplTest {
-
-    private StudentService studentService = mock(StudentService.class);
 
     @Mock
     private StudentRepository studentRepository;
@@ -33,7 +29,6 @@ public class StudentServiceImplTest {
     public void setUp() {
         when(studentRepository.findOneByIndex(index)).thenReturn(expectedStudent);
         when(studentRepository.findAll()).thenReturn(expectedStudentList);
-//        when(studentRepository.deleteByIndex(index)).thenReturn(any());
     }
 
     @Test
@@ -58,7 +53,7 @@ public class StudentServiceImplTest {
     }
 
     @Test
-    public void updateStudent(){
+    public void updateStudent() {
         Student student = studentRepository.findOneByIndex(index);
 
         student.setName("aaa");
@@ -70,7 +65,7 @@ public class StudentServiceImplTest {
     }
 
     @Test
-    public void deleteStudent(){
+    public void deleteStudent() {
         studentRepository.deleteByIndex(index);
 
         verify(studentRepository, times(1)).deleteByIndex(any());
