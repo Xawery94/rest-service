@@ -2,8 +2,10 @@ package com.company.rest.integration;
 
 import com.company.rest.controllers.StudentController;
 import com.company.rest.entity.Course;
+import com.company.rest.entity.Grade;
 import com.company.rest.entity.Student;
 import com.company.rest.services.StudentService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -18,7 +20,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -31,9 +35,11 @@ public class StudentApiTest {
     @MockBean
     private StudentService studentService;
 
-    Student expectedStudent = new Student("123456", "Jan", "Kowal", null);
-    Course expectedCourse = new Course("1", "Spring", "Arnold");
-    List<Student> expectedStudentList = Collections.singletonList(expectedStudent);
+    private static final Date date = new Date();
+    private static final Student expectedStudent = new Student("123456", "Jan", "Kowal", null);
+    private static final Course expectedCourse = new Course("1", "Spring", "Arnold");
+    private static final List<Grade> expectedGrade = new ArrayList<>(Collections.singletonList(new Grade(2.0, date, "Spring")));
+    private static final List<Student> expectedStudentList = Collections.singletonList(expectedStudent);
 
     @Test
     public void retrieveDetailsForStudent() throws Exception {
@@ -61,6 +67,24 @@ public class StudentApiTest {
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
         String expected = "{\"id\":\"1\",\"name\":\"Spring\",\"teacher\":\"Arnold\"}";
+
+        JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
+    }
+
+    @Ignore
+    @Test
+    public void retrieveGradeDetailsForCourse() throws Exception {
+        Mockito.when(studentService.getOneGrade("123456", "Spring", 2.0)).thenReturn(expectedGrade);
+
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
+                "/students/123456/courses/Spring/grades/2.0").accept(
+                MediaType.APPLICATION_JSON);
+
+        MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+        System.err.println(result.getResponse().getContentAsString());
+
+        String expected = "[{\"value\":2.0,\"date\":\"" + date + "\",\"courseName\":\"Spring\"}]";
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
     }

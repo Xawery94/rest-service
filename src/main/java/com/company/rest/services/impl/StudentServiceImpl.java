@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -141,7 +142,7 @@ public class StudentServiceImpl implements StudentService {
     public Grade addNewGrade(String index, String courseName, Grade gradeBody) {
         if (index != null) {
             Student student = studentRepository.findOneByIndex(index);
-            Grade grade = new Grade(gradeBody.getValue(), courseName);
+            Grade grade = new Grade(gradeBody.getValue(), new Date(), courseName);
             List<Grade> gradeList = student.getGrades();
 
             double gradeValue = grade.getValue();
@@ -205,7 +206,7 @@ public class StudentServiceImpl implements StudentService {
     public List<Grade> deleteGrade(String index, String courseName, double value) {
         Student student = studentRepository.findOneByIndex(index);
         if (student == null) {
-            return null;
+            throw new StudentDataExceptions();
         }
 
         List<Grade> gradeList = student.getGrades();

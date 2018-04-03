@@ -13,9 +13,9 @@ public class Grade {
     public Grade() {
     }
 
-    public Grade(double value, String courseName) {
+    public Grade(double value, Date date, String courseName) {
         this.value = value;
-        this.date = new Date();
+        this.date = date;
         this.courseName = courseName;
     }
 
