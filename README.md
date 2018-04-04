@@ -1,6 +1,10 @@
 ## Student Rest-service
-This is a simple rest sest for managing students, courses and grades.
-Below is a list of endpoints with an example response:
+Backend side for student service written in JAVA using Mongodb for storage data. Using this service you can manage students, grades and courses. Below are described dependencies and simple REST Api examples.
+
+## Dependencies
+* JAVA 8 - https://www.java.com/pl/download/
+* Spring Boot - https://projects.spring.io/spring-boot/
+* Mongo - https://www.mongodb.com/
 
 ## API
 
