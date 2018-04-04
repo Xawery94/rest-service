@@ -32,7 +32,7 @@ public class StudentServiceImplTest {
     private StudentRepository studentRepository;
 
     @InjectMocks
-    private final StudentServiceImpl studentService = new StudentServiceImpl(studentRepository);
+    private StudentServiceImpl studentService;
 
     private static final String index = "123456";
     private static final List<Student> expectedStudentList = new ArrayList<>();
@@ -133,8 +133,16 @@ public class StudentServiceImplTest {
     }
 
     @Test
-    public void shouldAddNewGrade() {
-        Grade grade = new Grade(2.5, date, "AAA");
+    public void shouldAddNewGradeMin() {
+        Grade grade = new Grade(2.0, date, "AAA");
+        studentService.addNewGrade(index, "Spring", grade);
+
+        verify(studentRepository, times(1)).save(any());
+    }
+
+    @Test
+    public void shouldAddNewGradeMax() {
+        Grade grade = new Grade(5.0, date, "AAA");
         studentService.addNewGrade(index, "Spring", grade);
 
         verify(studentRepository, times(1)).save(any());
