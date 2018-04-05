@@ -37,23 +37,8 @@ Backend side for student service written in JAVA using Mongodb for storage data.
                 "courseName": "Spring"
             },
             {
-                "value": 4,
+                "value": 2.5,
                 "date": "2018-03-31T12:01:06.370+0000",
-                "courseName": "Spring"
-            },
-            {
-                "value": 4,
-                "date": "2018-03-31T12:01:07.396+0000",
-                "courseName": "Spring"
-            },
-            {
-                "value": 3.5,
-                "date": "2018-03-31T12:01:11.866+0000",
-                "courseName": "Spring"
-            },
-            {
-                "value": 3.5,
-                "date": "2018-03-31T12:01:12.593+0000",
                 "courseName": "Spring"
             }
         ],
@@ -66,4 +51,29 @@ Backend side for student service written in JAVA using Mongodb for storage data.
         ]
     }
 ]
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+	<0>
+		<index>123456</index>
+		<name>Paga</name>
+		<lastName>Alonso</lastName>
+		<birthday>2018-03-31T00:00:00.000+0000</birthday>
+		<grades>
+			<value>4</value>
+			<date>2018-03-31T12:00:36.073+0000</date>
+			<courseName>Spring</courseName>
+		</grades>
+		<grades>
+			<value>2.5</value>
+			<date>2018-03-31T12:01:06.370+0000</date>
+			<courseName>Spring</courseName>
+		</grades>
+		<courses>
+			<id>1</id>
+			<name>Spring</name>
+			<teacher>Arnold</teacher>
+		</courses>
+	</0>
 ```
