@@ -242,6 +242,7 @@ public class StudentServiceImpl implements StudentService {
             }
 
             studentRepository.save(student);
+            return course;
         }
         return null;
     }

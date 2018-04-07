@@ -24,56 +24,57 @@ Backend side for student service written in JAVA using Mongodb for storage data.
 ### [GET] /students/{index}
 
 ```json
-[
-    {
-        "index": "123456",
-        "name": "Paga",
-        "lastName": "Alonso",
-        "birthday": "2018-03-31T00:00:00.000+0000",
-        "grades": [
-            {
-                "value": 4,
-                "date": "2018-03-31T12:00:36.073+0000",
-                "courseName": "Spring"
-            },
-            {
-                "value": 2.5,
-                "date": "2018-03-31T12:01:06.370+0000",
-                "courseName": "Spring"
-            }
-        ],
-        "courses": [
-            {
-                "id": "1",
-                "name": "Spring",
-                "teacher": "Arnold"
-            }
-        ]
-    }
-]
+{
+    "index": "123456",
+    "name": "Jan",
+    "lastName": "Kowalski",
+    "birthday": "2000-10-20T00:00:00.000+0000",
+    "grades": [
+        {
+            "value": 4.5,
+            "date": "2018-03-31T17:55:05.791+0000",
+            "courseName": "Spring"
+        },
+        {
+            "value": 4.5,
+            "date": "2018-03-31T17:55:06.479+0000",
+            "courseName": "Spring"
+        }
+    ],
+    "courses": [
+        {
+            "id": "1",
+            "name": "Spring",
+            "teacher": "Stefan"
+        }
+    ]
+}
 ```
 
 ```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-	<0>
-		<index>123456</index>
-		<name>Paga</name>
-		<lastName>Alonso</lastName>
-		<birthday>2018-03-31T00:00:00.000+0000</birthday>
-		<grades>
-			<value>4</value>
-			<date>2018-03-31T12:00:36.073+0000</date>
-			<courseName>Spring</courseName>
-		</grades>
-		<grades>
-			<value>2.5</value>
-			<date>2018-03-31T12:01:06.370+0000</date>
-			<courseName>Spring</courseName>
-		</grades>
-		<courses>
-			<id>1</id>
-			<name>Spring</name>
-			<teacher>Arnold</teacher>
-		</courses>
-	</0>
+<Student>
+    <index>123456</index>
+    <name>Jan</name>
+    <lastName>Kowalski</lastName>
+    <birthday>2000-10-20T00:00:00.000+0000</birthday>
+    <grades>
+        <grades>
+            <value>4.5</value>
+            <date>2018-03-31T17:55:05.791+0000</date>
+            <courseName>Spring</courseName>
+        </grades>
+        <grades>
+            <value>4.5</value>
+            <date>2018-03-31T17:55:06.479+0000</date>
+            <courseName>Spring</courseName>
+        </grades>
+    </grades>
+    <courses>
+        <courses>
+            <id>1</id>
+            <name>Spring</name>
+            <teacher>Stefan</teacher>
+        </courses>
+    </courses>
+</Student>
 ```
