@@ -122,12 +122,15 @@ public class StudentServiceImpl implements StudentService {
         if (id != null) {
             List<Grade> grades = retrieveGrade(index, courseName);
 
-            for (Grade grade : grades) {
-                if (grade.getId().equals(id)) {
-                    return grade;
+            if (grades != null) {
+                for (Grade grade : grades) {
+                    if (grade.getId().equals(id)) {
+                        return grade;
+                    }
                 }
             }
         }
+
 
         return null;
     }
@@ -181,7 +184,6 @@ public class StudentServiceImpl implements StudentService {
 
             for (Course course : student.getCourses()) {
                 if (course.getName().equals(courseName)) {
-                    course.setId(newCourse.getId());
                     course.setName(newCourse.getName());
                     course.setTeacher(newCourse.getTeacher());
 

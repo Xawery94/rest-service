@@ -103,9 +103,9 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}")
-    public List<Course> deleteCourse(@PathVariable String index,
+    public void deleteCourse(@PathVariable String index,
                                 @PathVariable String courseName) {
-        return studentService.deleteCourse(index, courseName);
+        studentService.deleteCourse(index, courseName);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{index}/courses/{courseName}")
@@ -172,9 +172,9 @@ public class StudentController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}/grades/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public List<Grade> deleteGradeForCourse(@PathVariable String index,
+    public void deleteGradeForCourse(@PathVariable String index,
                                             @PathVariable String courseName,
                                             @PathVariable Integer id) {
-        return studentService.deleteGrade(index, courseName, id);
+        studentService.deleteGrade(index, courseName, id);
     }
 }

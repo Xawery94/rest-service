@@ -1,19 +1,18 @@
 package com.company.rest.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
-@Document
 public class Grade {
 
-    @Id
+    @NotNull
     private Integer id;
-
     @NotNull
     private double value;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "CET")
     private Date date;
     private String courseName;
 

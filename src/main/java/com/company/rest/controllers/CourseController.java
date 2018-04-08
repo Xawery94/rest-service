@@ -45,8 +45,13 @@ public class CourseController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{name}")
-    public Course getCurrentCourse(@PathVariable String name) {
-        return courseService.getCourse(name);
+    public ResponseEntity<Course> getCurrentCourse(@PathVariable String name) {
+        Course course = courseService.getCourse(name);
+
+        if (course != null) {
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{name}")

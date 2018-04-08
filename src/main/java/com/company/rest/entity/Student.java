@@ -1,21 +1,30 @@
 package com.company.rest.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
+@Document
 public class Student {
 
     @Id
+    @JsonIgnore
+    private ObjectId id;
+
     @NotNull(message = "User's index must not be null")
     @Size(min = 6, max = 10)
     private String index;
     private String name;
     private String lastName;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "CET")
     private Date birthday;
 
     @JsonIgnore
@@ -27,10 +36,19 @@ public class Student {
     }
 
     public Student(String index, String name, String lastName, Date birthday) {
+        this.id = new ObjectId();
         this.index = index;
         this.name = name;
         this.lastName = lastName;
         this.birthday = birthday;
+    }
+
+    public ObjectId getId() {
+        return id;
+    }
+
+    public void setId(ObjectId id) {
+        this.id = id;
     }
 
     public String getIndex() {
