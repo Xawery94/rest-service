@@ -3,6 +3,7 @@ package com.company.rest.controllers;
 import com.company.rest.entity.Course;
 import com.company.rest.entity.Grade;
 import com.company.rest.entity.Student;
+import com.company.rest.exceptions.AddNewGradeException;
 import com.company.rest.exceptions.GradeValidationException;
 import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,8 +48,13 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}")
-    public Student retrieveStudent(@PathVariable String index) {
-        return studentService.getStudent(index);
+    public ResponseEntity<Student> retrieveStudent(@PathVariable String index) {
+        Student student = studentService.getStudent(index);
+
+        if (student != null) {
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{index}")
@@ -86,9 +92,14 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}")
-    public Course retrieveDetailsForCourse(@PathVariable String index,
+    public ResponseEntity<Course> retrieveDetailsForCourse(@PathVariable String index,
                                            @PathVariable String courseName) {
-        return studentService.retrieveCourse(index, courseName);
+        Course course= studentService.retrieveCourse(index, courseName);
+
+        if (course != null) {
+            return new ResponseEntity<>(course, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}")
@@ -134,31 +145,36 @@ public class StudentController {
         return ResponseEntity.created(location).build();
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}/grades/{value}")
-    public List<Grade> retrieveGradeForCourse(@PathVariable String index,
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}/grades/{id}")
+    public ResponseEntity<Grade> retrieveGradeForCourse(@PathVariable String index,
                                               @PathVariable String courseName,
-                                              @PathVariable double value) {
-        return studentService.getOneGrade(index, courseName, value);
+                                              @PathVariable Integer id) {
+        Grade grade = studentService.getOneGrade(index, courseName, id);
+
+        if (grade != null) {
+            return new ResponseEntity<>(grade, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{index}/courses/{courseName}/grades/{value}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{index}/courses/{courseName}/grades/{id}")
     @ResponseStatus(HttpStatus.OK)
     public Grade updateGradeForCourse(@PathVariable String index,
                                       @PathVariable String courseName,
-                                      @PathVariable double value,
+                                      @PathVariable Integer id,
                                       @RequestBody Grade newGrade) {
 
         if (newGrade.getValue() < 2.0 || newGrade.getValue() > 5.0) {
-            throw new GradeValidationException();
+            throw new AddNewGradeException();
         }
-        return studentService.updateGrade(index, courseName, value, newGrade);
+        return studentService.updateGrade(index, courseName, id, newGrade);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}/grades/{value}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}/grades/{id}")
     @ResponseStatus(HttpStatus.OK)
     public List<Grade> deleteGradeForCourse(@PathVariable String index,
                                             @PathVariable String courseName,
-                                            @PathVariable double value) {
-        return studentService.deleteGrade(index, courseName, value);
+                                            @PathVariable Integer id) {
+        return studentService.deleteGrade(index, courseName, id);
     }
 }

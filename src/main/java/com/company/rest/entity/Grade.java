@@ -10,7 +10,7 @@ import java.util.Date;
 public class Grade {
 
     @Id
-    private int id;
+    private Integer id;
 
     @NotNull
     private double value;
@@ -20,18 +20,18 @@ public class Grade {
     public Grade() {
     }
 
-    public Grade(int id, double value, Date date, String courseName) {
+    public Grade(Integer id, double value, Date date, String courseName) {
         this.id = id;
         this.value = value;
         this.date = date;
         this.courseName = courseName;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

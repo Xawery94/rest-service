@@ -26,7 +26,7 @@ public interface StudentService {
 
     List<Grade> retrieveGrade(String index, String courseName);
 
-    List<Grade> getOneGrade(String index, String courseName, double value);
+    Grade getOneGrade(String index, String courseName, Integer id);
 
     List<Course> deleteCourse(String index, String courseName);
 
@@ -34,7 +34,7 @@ public interface StudentService {
 
     Course updateCourse(String index, String courseName, Course newCourse);
 
-    Grade updateGrade(String index, String courseName, double value, Grade newGrade);
+    Grade updateGrade(String index, String courseName, Integer id, Grade newGrade);
 
-    List<Grade> deleteGrade(String index, String courseName, double value);
+    List<Grade> deleteGrade(String index, String courseName, Integer id);
 }

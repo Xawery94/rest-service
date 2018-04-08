@@ -43,8 +43,13 @@ public class StudentServiceImpl implements StudentService {
 
         Student existingStudent = studentRepository.findOneByIndex(body.getIndex());
 
-        if (existingStudent.getIndex().equals(body.getIndex())){
-            throw new StudentExistException();
+        if (existingStudent != null) {
+            if (existingStudent.getIndex().equals(body.getIndex())) {
+                throw new StudentExistException();
+            }
+
+            studentRepository.save(body);
+            return body;
         }
 
         studentRepository.save(body);
@@ -113,18 +118,18 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Grade> getOneGrade(String index, String courseName, double value) {
-        List<Grade> grades = retrieveGrade(index, courseName);
-        List<Grade> gradesToReturn = new ArrayList<>();
+    public Grade getOneGrade(String index, String courseName, Integer id) {
+        if (id != null) {
+            List<Grade> grades = retrieveGrade(index, courseName);
 
-        for (Grade grade : grades) {
-
-            if (grade.getValue() == value) {
-                gradesToReturn.add(grade);
+            for (Grade grade : grades) {
+                if (grade.getId().equals(id)) {
+                    return grade;
+                }
             }
         }
 
-        return gradesToReturn;
+        return null;
     }
 
     @Override
@@ -146,8 +151,8 @@ public class StudentServiceImpl implements StudentService {
     public Grade addNewGrade(String index, String courseName, Grade gradeBody) {
         if (index != null) {
             Student student = studentRepository.findOneByIndex(index);
-            int id = student.getGrades().size()+1;
-            Grade grade = new Grade(id, gradeBody.getValue(), new Date(), courseName);
+
+            Grade grade = new Grade(gradeBody.getId(), gradeBody.getValue(), new Date(), courseName);
             List<Grade> gradeList = student.getGrades();
 
             double gradeValue = grade.getValue();
@@ -163,7 +168,6 @@ public class StudentServiceImpl implements StudentService {
             }
 
             studentRepository.save(student);
-
             return grade;
         }
 
@@ -191,12 +195,12 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Grade updateGrade(String index, String courseName, double value, Grade newGrade) {
+    public Grade updateGrade(String index, String courseName, Integer id, Grade newGrade) {
         if (index != null) {
             Student student = studentRepository.findOneByIndex(index);
 
             for (Grade grade : student.getGrades()) {
-                if (grade.getId() == newGrade.getId() && grade.getCourseName().equals(courseName) && grade.getValue() == value) {
+                if (grade.getId().equals(id)) {
                     grade.setValue(newGrade.getValue());
 
                     studentRepository.save(student);
@@ -209,7 +213,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Grade> deleteGrade(String index, String courseName, double value) {
+    public List<Grade> deleteGrade(String index, String courseName, Integer id) {
         Student student = studentRepository.findOneByIndex(index);
         if (student == null) {
             throw new StudentDataExceptions();
@@ -218,7 +222,7 @@ public class StudentServiceImpl implements StudentService {
         List<Grade> gradeList = student.getGrades();
 
         for (Grade grade : gradeList) {
-            if (grade.getCourseName().equals(courseName) && grade.getValue() == value) {
+            if (grade.getId().equals(id)) {
                 gradeList.remove(grade);
 
                 student.setGrades(gradeList);
@@ -249,6 +253,7 @@ public class StudentServiceImpl implements StudentService {
 
             studentRepository.save(student);
             return course;
+
         }
         return null;
     }
