@@ -51,7 +51,7 @@ public class StudentApiTest {
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();
 
-        String expected = "[{\"index\":\"123456\",\"name\":\"Jan\",\"lastName\":\"Kowal\",\"birthday\":null,\"grades\":null,\"courses\":null}]";
+        String expected = "[{\"index\":\"123456\",\"name\":\"Jan\",\"lastName\":\"Kowal\",\"birthday\":null}]";
 
         JSONAssert.assertEquals(expected, result.getResponse().getContentAsString(), false);
     }

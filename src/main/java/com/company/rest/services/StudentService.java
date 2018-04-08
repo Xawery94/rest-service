@@ -28,7 +28,7 @@ public interface StudentService {
 
     List<Grade> getOneGrade(String index, String courseName, double value);
 
-    Student deleteCourse(String index, String courseName);
+    List<Course> deleteCourse(String index, String courseName);
 
     Grade addNewGrade(String index, String courseName, Grade grade);
 

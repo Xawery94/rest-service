@@ -7,14 +7,12 @@ import com.company.rest.entity.Student;
 import com.company.rest.exceptions.AddNewGradeException;
 import com.company.rest.exceptions.StudentDataExceptions;
 import com.company.rest.exceptions.StudentDeleteException;
+import com.company.rest.exceptions.StudentExistException;
 import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,6 +39,12 @@ public class StudentServiceImpl implements StudentService {
     public Student addStudent(Student body) {
         if (body.getIndex() == null || body.getName() == null || body.getLastName() == null || body.getBirthday().toString() == null) {
             throw new StudentDataExceptions();
+        }
+
+        Student existingStudent = studentRepository.findOneByIndex(body.getIndex());
+
+        if (existingStudent.getIndex().equals(body.getIndex())){
+            throw new StudentExistException();
         }
 
         studentRepository.save(body);
@@ -124,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public Student deleteCourse(String index, String courseName) {
+    public List<Course> deleteCourse(String index, String courseName) {
         Student student = studentRepository.findOneByIndex(index);
         if (student == null) {
             throw new StudentDeleteException();
@@ -135,14 +139,15 @@ public class StudentServiceImpl implements StudentService {
         student.setCourses(courses);
         studentRepository.save(student);
 
-        return student;
+        return student.getCourses();
     }
 
     @Override
     public Grade addNewGrade(String index, String courseName, Grade gradeBody) {
         if (index != null) {
             Student student = studentRepository.findOneByIndex(index);
-            Grade grade = new Grade(gradeBody.getValue(), new Date(), courseName);
+            int id = student.getGrades().size()+1;
+            Grade grade = new Grade(id, gradeBody.getValue(), new Date(), courseName);
             List<Grade> gradeList = student.getGrades();
 
             double gradeValue = grade.getValue();
@@ -172,6 +177,7 @@ public class StudentServiceImpl implements StudentService {
 
             for (Course course : student.getCourses()) {
                 if (course.getName().equals(courseName)) {
+                    course.setId(newCourse.getId());
                     course.setName(newCourse.getName());
                     course.setTeacher(newCourse.getTeacher());
 
@@ -190,7 +196,7 @@ public class StudentServiceImpl implements StudentService {
             Student student = studentRepository.findOneByIndex(index);
 
             for (Grade grade : student.getGrades()) {
-                if (grade.getCourseName().equals(courseName) && grade.getValue() == value) {
+                if (grade.getId() == newGrade.getId() && grade.getCourseName().equals(courseName) && grade.getValue() == value) {
                     grade.setValue(newGrade.getValue());
 
                     studentRepository.save(student);

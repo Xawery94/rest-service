@@ -92,7 +92,7 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}")
-    public Student deleteCourse(@PathVariable String index,
+    public List<Course> deleteCourse(@PathVariable String index,
                                 @PathVariable String courseName) {
         return studentService.deleteCourse(index, courseName);
     }

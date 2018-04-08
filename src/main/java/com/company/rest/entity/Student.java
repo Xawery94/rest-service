@@ -1,5 +1,6 @@
 package com.company.rest.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
@@ -11,12 +12,15 @@ public class Student {
 
     @Id
     @NotNull(message = "User's index must not be null")
-    @Size(min = 6)
+    @Size(min = 6, max = 10)
     private String index;
     private String name;
     private String lastName;
     private Date birthday;
+
+    @JsonIgnore
     private List<Grade> grades;
+    @JsonIgnore
     private List<Course> courses;
 
     public Student() {
