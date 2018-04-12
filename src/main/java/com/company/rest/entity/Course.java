@@ -1,34 +1,30 @@
 package com.company.rest.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Course {
 
-    @JsonIgnore
     @Id
-    private ObjectId id;
-
+    private Integer id;
     private String name;
     private String teacher;
 
     public Course() {
     }
 
-    public Course(String name, String teacher) {
-        this.id = new ObjectId();
+    public Course(Integer id, String name, String teacher) {
+        this.id = id;
         this.name = name;
         this.teacher = teacher;
     }
 
-    public ObjectId getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(ObjectId id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

@@ -7,12 +7,14 @@ import com.company.rest.exceptions.AddNewGradeException;
 import com.company.rest.exceptions.GradeValidationException;
 import com.company.rest.services.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -31,8 +33,44 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "name")
+    public List<Student> retrieveAllStudentsByName(
+            @RequestParam("name") String name) {
+        return studentService.getStudentsByName(name);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "lastName")
+    public List<Student> retrieveAllStudentsByLastName(
+            @RequestParam("lastName") String lastName) {
+        return studentService.getStudentsByLastName(lastName);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = {"name", "lastName"})
+    public List<Student> retrieveAllStudentsByNameAndLastName(
+            @RequestParam("name") String name,
+            @RequestParam("lastName") String lastName) {
+        return studentService.getStudentsByNameAndLastName(name, lastName);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "birthday")
+    public List<Student> retrieveAllStudentsByBirthday(
+            @RequestParam("birthday") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+        return studentService.getStudentsByBirthday(date);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "birthdayBefore")
+    public List<Student> retrieveAllStudentsByBirthdayBefore(
+            @RequestParam("birthdayBefore") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+        return studentService.getStudentsByBirthdayBefore(date);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, params = "birthdayAfter")
+    public List<Student> retrieveAllStudentsByBirthdayAfter(
+            @RequestParam("birthdayAfter") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date) {
+        return studentService.getStudentsByBirthdayAfter(date);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Student> addNewStudent(@RequestBody Student studentBody) {
         Student student = studentService.addStudent(studentBody);
 
@@ -75,7 +113,6 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{index}/courses")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Course> registerStudentForCourse(@PathVariable String index,
                                                            @RequestBody Course newCourse) {
         Course course = studentService.addNewCourse(index, newCourse);
@@ -93,8 +130,8 @@ public class StudentController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}")
     public ResponseEntity<Course> retrieveDetailsForCourse(@PathVariable String index,
-                                           @PathVariable String courseName) {
-        Course course= studentService.retrieveCourse(index, courseName);
+                                                           @PathVariable String courseName) {
+        Course course = studentService.retrieveCourse(index, courseName);
 
         if (course != null) {
             return new ResponseEntity<>(course, HttpStatus.OK);
@@ -104,7 +141,7 @@ public class StudentController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}")
     public void deleteCourse(@PathVariable String index,
-                                @PathVariable String courseName) {
+                             @PathVariable String courseName) {
         studentService.deleteCourse(index, courseName);
     }
 
@@ -122,8 +159,21 @@ public class StudentController {
         return studentService.retrieveGrade(index, courseName);
     }
 
+    @RequestMapping(value = "/{index}/courses/{courseName}/grades", method = RequestMethod.GET, params = "valueGrater")
+    public List<Grade> retrieveAllGradeForCourseGraterThan(@PathVariable String index,
+                                                           @PathVariable String courseName,
+                                                           @RequestParam("valueGrater") double value) {
+        return studentService.retrieveGradeGraterThan(index, courseName, value);
+    }
+
+    @RequestMapping(value = "/{index}/courses/{courseName}/grades", method = RequestMethod.GET, params = "valueLess")
+    public List<Grade> retrieveAllGradeForCourseLessThan(@PathVariable String index,
+                                                         @PathVariable String courseName,
+                                                         @RequestParam("valueLess") double value) {
+        return studentService.retrieveGradeLessThan(index, courseName, value);
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "/{index}/courses/{courseName}/grades")
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Grade> createGradeForCourse(@PathVariable String index,
                                                       @PathVariable String courseName,
                                                       @RequestBody Grade gradeBody) {
@@ -147,8 +197,8 @@ public class StudentController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}/grades/{id}")
     public ResponseEntity<Grade> retrieveGradeForCourse(@PathVariable String index,
-                                              @PathVariable String courseName,
-                                              @PathVariable Integer id) {
+                                                        @PathVariable String courseName,
+                                                        @PathVariable Integer id) {
         Grade grade = studentService.getOneGrade(index, courseName, id);
 
         if (grade != null) {
@@ -173,8 +223,8 @@ public class StudentController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/{index}/courses/{courseName}/grades/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteGradeForCourse(@PathVariable String index,
-                                            @PathVariable String courseName,
-                                            @PathVariable Integer id) {
+                                     @PathVariable String courseName,
+                                     @PathVariable Integer id) {
         studentService.deleteGrade(index, courseName, id);
     }
 }

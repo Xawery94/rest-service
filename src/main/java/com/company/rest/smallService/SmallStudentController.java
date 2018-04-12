@@ -27,14 +27,14 @@ public class SmallStudentController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public SmallStudent addNewStudent(@RequestBody SmallStudent student){
+    public SmallStudent addNewStudent(@RequestBody SmallStudent student) {
         studentService.addStudent(student);
         return student;
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{index}")
     @ResponseStatus(HttpStatus.OK)
-    public SmallStudent updateStudent(@PathVariable String index, @RequestBody SmallStudent student){
+    public SmallStudent updateStudent(@PathVariable String index, @RequestBody SmallStudent student) {
         studentService.updateStudent(index, student);
         return student;
     }
@@ -72,12 +72,12 @@ public class SmallStudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/grades")
-    public List<SmallGrade> retrieveAllGradesForStudents(@PathVariable String index){
+    public List<SmallGrade> retrieveAllGradesForStudents(@PathVariable String index) {
         return studentService.retrieveGradeForStudent(index);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/grades/{value}")
-    public List<SmallGrade> retrieveAllGradesForStudents(@PathVariable String index, @PathVariable double value){
+    public List<SmallGrade> retrieveAllGradesForStudents(@PathVariable String index, @PathVariable double value) {
         return studentService.retrieveOneTypeGradeForStudent(index, value);
     }
 

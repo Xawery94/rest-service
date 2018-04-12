@@ -4,6 +4,7 @@ import com.company.rest.entity.Course;
 import com.company.rest.entity.Grade;
 import com.company.rest.entity.Student;
 
+import java.util.Date;
 import java.util.List;
 
 public interface StudentService {
@@ -28,7 +29,7 @@ public interface StudentService {
 
     Grade getOneGrade(String index, String courseName, Integer id);
 
-    List<Course> deleteCourse(String index, String courseName);
+    void deleteCourse(String index, String courseName);
 
     Grade addNewGrade(String index, String courseName, Grade grade);
 
@@ -37,4 +38,20 @@ public interface StudentService {
     Grade updateGrade(String index, String courseName, Integer id, Grade newGrade);
 
     List<Grade> deleteGrade(String index, String courseName, Integer id);
+
+    List<Student> getStudentsByName(String name);
+
+    List<Student> getStudentsByLastName(String lastName);
+
+    List<Student> getStudentsByNameAndLastName(String name, String lastName);
+
+    List<Student> getStudentsByBirthday(Date date);
+
+    List<Student> getStudentsByBirthdayBefore(Date date);
+
+    List<Student> getStudentsByBirthdayAfter(Date date);
+
+    List<Grade> retrieveGradeGraterThan(String index, String courseName, double value);
+
+    List<Grade> retrieveGradeLessThan(String index, String courseName, double value);
 }

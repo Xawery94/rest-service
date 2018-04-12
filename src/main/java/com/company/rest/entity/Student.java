@@ -17,7 +17,6 @@ public class Student {
     @Id
     @JsonIgnore
     private ObjectId id;
-
     @NotNull(message = "User's index must not be null")
     @Size(min = 6, max = 10)
     private String index;

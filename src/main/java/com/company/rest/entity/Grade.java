@@ -1,14 +1,16 @@
 package com.company.rest.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class Grade {
 
-    @NotNull
+    @Id
     private Integer id;
+
     @NotNull
     private double value;
 

@@ -5,5 +5,5 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @SuppressWarnings("serial")
 @ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Missing content in student request.")
-public class StudentDataExceptions extends RuntimeException{
+public class StudentDataExceptions extends RuntimeException {
 }

@@ -37,8 +37,9 @@ public class StudentApiTest {
 
     private static final Date date = new Date();
     private static final Student expectedStudent = new Student("123456", "Jan", "Kowal", null);
-    private static final Course expectedCourse = new Course("1", "Spring", "Arnold");
-    private static final List<Grade> expectedGrade = new ArrayList<>(Collections.singletonList(new Grade(2.0, date, "Spring")));
+    private static final Course expectedCourse = new Course(1, "Spring", "Arnold");
+    private static final List<Grade> expectedGradeList = new ArrayList<>(Collections.singletonList(new Grade(1, 2.0, date, "Spring")));
+    private static final Grade expectedGrade = new Grade(1, 2.0, date, "Spring");
     private static final List<Student> expectedStudentList = Collections.singletonList(expectedStudent);
 
     @Test
@@ -74,10 +75,10 @@ public class StudentApiTest {
     @Ignore
     @Test
     public void retrieveGradeDetailsForCourse() throws Exception {
-        Mockito.when(studentService.getOneGrade("123456", "Spring", 2.0)).thenReturn(expectedGrade);
+        Mockito.when(studentService.getOneGrade("123456", "Spring", 1)).thenReturn(expectedGrade);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(
-                "/students/123456/courses/Spring/grades/2.0").accept(
+                "/students/123456/courses/Spring/grades/1").accept(
                 MediaType.APPLICATION_JSON);
 
         MvcResult result = mockMvc.perform(requestBuilder).andReturn();

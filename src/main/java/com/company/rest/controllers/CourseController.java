@@ -27,8 +27,13 @@ public class CourseController {
         return courseService.getAllCourses();
     }
 
+    @RequestMapping(method = RequestMethod.GET, params = "teacher")
+    public List<Course> retrieveAllCoursesForTeacher(
+            @RequestParam("teacher") String name) {
+        return courseService.getAllCoursesForTeacher(name);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Course> addNewCourse(@RequestBody Course newCourse) {
 
         Course course = courseService.createNewCourse(newCourse);

@@ -7,16 +7,21 @@ import com.company.rest.entity.Student;
 import com.company.rest.exceptions.AddNewGradeException;
 import com.company.rest.exceptions.StudentDataExceptions;
 import com.company.rest.exceptions.StudentDeleteException;
-import com.company.rest.exceptions.StudentExistException;
 import com.company.rest.services.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class StudentServiceImpl implements StudentService {
+
+    private static final Logger log = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     private StudentRepository studentRepository;
 
@@ -36,6 +41,97 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Student> getStudentsByName(String name) {
+        return studentRepository.findAllByName(name);
+    }
+
+    @Override
+    public List<Student> getStudentsByLastName(String lastName) {
+        return studentRepository.findAllByLastName(lastName);
+    }
+
+    @Override
+    public List<Student> getStudentsByNameAndLastName(String name, String lastName) {
+        List<Student> studentList = studentRepository.findAll();
+
+        final List<Student> students = studentList.stream()
+                .filter(s -> s.getName().equals(name))
+                .filter(sl -> sl.getLastName().equals(lastName))
+                .collect(Collectors.toList());
+
+        if (students == null) {
+            return null;
+        } else {
+            return students;
+        }
+    }
+
+    @Override
+    public List<Student> getStudentsByBirthday(Date date) {
+        return studentRepository.findAllByBirthday(date);
+    }
+
+    @Override
+    public List<Student> getStudentsByBirthdayBefore(Date date) {
+        List<Student> studentList = studentRepository.findAll();
+
+        final List<Student> students = studentList.stream()
+                .filter(s -> s.getBirthday().before(date))
+                .collect(Collectors.toList());
+
+
+        if (students == null) {
+            return null;
+        } else {
+            return students;
+        }
+    }
+
+    @Override
+    public List<Student> getStudentsByBirthdayAfter(Date date) {
+        List<Student> studentList = studentRepository.findAll();
+
+        final List<Student> students = studentList.stream()
+                .filter(s -> s.getBirthday().after(date))
+                .collect(Collectors.toList());
+
+
+        if (students == null) {
+            return null;
+        } else {
+            return students;
+        }
+    }
+
+    @Override
+    public List<Grade> retrieveGradeGraterThan(String index, String courseName, double value) {
+        Student student = studentRepository.findOneByIndex(index);
+
+        if (student.getGrades() == null) {
+            return null;
+        }
+
+        return student.getGrades().stream()
+                .filter(x -> x.getCourseName().equals(courseName))
+                .filter(g -> g.getValue() > value)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Grade> retrieveGradeLessThan(String index, String courseName, double value) {
+        Student student = studentRepository.findOneByIndex(index);
+
+        if (student.getGrades() == null) {
+            return null;
+        }
+
+        return student.getGrades().stream()
+                .filter(x -> x.getCourseName().equals(courseName))
+                .filter(g -> g.getValue() < value)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Student addStudent(Student body) {
         if (body.getIndex() == null || body.getName() == null || body.getLastName() == null || body.getBirthday().toString() == null) {
             throw new StudentDataExceptions();
@@ -44,11 +140,12 @@ public class StudentServiceImpl implements StudentService {
         Student existingStudent = studentRepository.findOneByIndex(body.getIndex());
 
         if (existingStudent != null) {
-            if (existingStudent.getIndex().equals(body.getIndex())) {
-                throw new StudentExistException();
+            try {
+                studentRepository.save(body);
+            } catch (Exception exc) {
+                log.warn("Trying add duplicate student with index {}", body.getIndex());
+                return null;
             }
-
-            studentRepository.save(body);
             return body;
         }
 
@@ -136,7 +233,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Course> deleteCourse(String index, String courseName) {
+    public void deleteCourse(String index, String courseName) {
         Student student = studentRepository.findOneByIndex(index);
         if (student == null) {
             throw new StudentDeleteException();
@@ -146,8 +243,6 @@ public class StudentServiceImpl implements StudentService {
         courses.removeIf(o -> o.getName().equals(courseName));
         student.setCourses(courses);
         studentRepository.save(student);
-
-        return student.getCourses();
     }
 
     @Override
@@ -167,7 +262,12 @@ public class StudentServiceImpl implements StudentService {
             if (gradeList == null) {
                 student.setGrades(Collections.singletonList(grade));
             } else {
-                gradeList.add(grade);
+                if (containsGradeId(gradeList, gradeBody.getId())) {
+                    log.warn("Trying add duplicated grade");
+                    return null;
+                } else {
+                    gradeList.add(grade);
+                }
             }
 
             studentRepository.save(student);
@@ -247,6 +347,7 @@ public class StudentServiceImpl implements StudentService {
                 student.setCourses(Collections.singletonList(course));
             } else {
                 if (containsCourse(student.getCourses(), course.getName())) {
+                    log.warn("Trying add duplicated course");
                     return null;
                 } else {
                     student.getCourses().add(course);
@@ -261,7 +362,15 @@ public class StudentServiceImpl implements StudentService {
     }
 
     private boolean containsCourse(final List<Course> list, String name) {
-        return list.stream().anyMatch(c -> c.getName().equals(name));
+        return list
+                .stream()
+                .anyMatch(c -> c.getName().equals(name));
+    }
+
+    private boolean containsGradeId(List<Grade> gradeList, int id) {
+        return gradeList
+                .stream()
+                .anyMatch(g -> g.getId().equals(id));
     }
 
 }

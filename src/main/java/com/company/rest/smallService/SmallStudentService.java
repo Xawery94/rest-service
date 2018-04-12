@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 public class SmallStudentService {
 
     private static List<SmallStudent> students = new ArrayList<>();
-    private SecureRandom random = new SecureRandom();
 
     static {
         SmallCourse course1 = new SmallCourse("1", "Spring", "Arnold");
@@ -52,6 +51,8 @@ public class SmallStudentService {
         student2.setCourses(Arrays.asList(course1, course3, course4));
 
     }
+
+    private SecureRandom random = new SecureRandom();
 
     //  GET Controller
     public List<SmallStudent> retrieveAllStudents() {
@@ -144,13 +145,11 @@ public class SmallStudentService {
 
 
     //  POST Controller
-    public SmallStudent addStudent(SmallStudent student){
+    public SmallStudent addStudent(SmallStudent student) {
         students.add(student);
 
         return student;
     }
-
-
 
     public SmallCourse addCourse(String index, SmallCourse course) {
         SmallStudent student = retrieveStudent(index);
@@ -177,7 +176,6 @@ public class SmallStudentService {
 
         students.add(currentStudent);
 
-        
         return currentStudent;
     }
 }

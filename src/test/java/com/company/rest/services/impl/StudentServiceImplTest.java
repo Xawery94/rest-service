@@ -37,8 +37,8 @@ public class StudentServiceImplTest {
     private static final String index = "123456";
     private static final List<Student> expectedStudentList = new ArrayList<>();
     private static final Student expectedStudent = new Student();
-    private static final List<Course> courseTemplate = new ArrayList<>(Collections.singleton(new Course("1", "Spring", "Arnold")));
-    private static final List<Grade> gradeTemplate = new ArrayList<>(Collections.singleton(new Grade(2.0, new Date(), "Spring")));
+    private static final List<Course> courseTemplate = new ArrayList<>(Collections.singleton(new Course(1, "Spring", "Arnold")));
+    private static final List<Grade> gradeTemplate = new ArrayList<>(Collections.singleton(new Grade(1, 2.0, new Date(), "Spring")));
     private static final List<Course> expectedCourseList = new ArrayList<>(courseTemplate);
     private static final List<Grade> expectedGradeList = new ArrayList<>(gradeTemplate);
     private static final Date date = new Date();
@@ -72,7 +72,8 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldAddNewStudent() {
-        studentService.addStudent(expectedStudent);
+        Student newStudent = new Student("122112", "Adam", "Kot", new Date());
+        studentService.addStudent(newStudent);
 
         verify(studentRepository, times(1)).save(any());
     }
@@ -122,19 +123,19 @@ public class StudentServiceImplTest {
 
     @Test(expected = AddNewGradeException.class)
     public void shouldThrowExceptionOnAddingNewGradeBelowLimit() {
-        Grade grade = new Grade(1.0, date, "AAA");
+        Grade grade = new Grade(1, 1.0, date, "AAA");
         studentService.addNewGrade(index, "AAA", grade);
     }
 
     @Test(expected = AddNewGradeException.class)
     public void shouldThrowExceptionOnAddingNewGradeAboveLimit() {
-        Grade grade = new Grade(5.5, date, "AAA");
+        Grade grade = new Grade(1, 5.5, date, "AAA");
         studentService.addNewGrade(index, "AAA", grade);
     }
 
     @Test
     public void shouldAddNewGradeMin() {
-        Grade grade = new Grade(2.0, date, "AAA");
+        Grade grade = new Grade(1, 2.0, date, "AAA");
         studentService.addNewGrade(index, "Spring", grade);
 
         verify(studentRepository, times(1)).save(any());
@@ -142,7 +143,7 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldAddNewGradeMax() {
-        Grade grade = new Grade(5.0, date, "AAA");
+        Grade grade = new Grade(1, 5.0, date, "AAA");
         studentService.addNewGrade(index, "Spring", grade);
 
         verify(studentRepository, times(1)).save(any());
@@ -150,12 +151,12 @@ public class StudentServiceImplTest {
 
     @Test(expected = StudentDataExceptions.class)
     public void shouldThrowExceptionOnDeleteGrade() {
-        studentService.deleteGrade("111", "AAA", 5.0);
+        studentService.deleteGrade("111", "AAA", 1);
     }
 
     @Test
     public void shouldTDeleteGrade() {
-        studentService.deleteGrade(index, "Spring", 2.0);
+        studentService.deleteGrade(index, "Spring", 1);
 
         verify(studentRepository, times(1)).save(any());
     }
