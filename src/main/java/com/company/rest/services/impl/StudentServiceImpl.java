@@ -52,18 +52,33 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public List<Student> getStudentsByNameAndLastName(String name, String lastName) {
-        List<Student> studentList = studentRepository.findAll();
+        //List<Student> studentList = studentRepository.findAll();
 
-        final List<Student> students = studentList.stream()
-                .filter(s -> s.getName().equals(name))
-                .filter(sl -> sl.getLastName().equals(lastName))
-                .collect(Collectors.toList());
-
-        if (students == null) {
+        if(name != null && lastName!= null){
+            System.err.printf(name, lastName);
             return null;
+
+            /*final List<Student> students = studentList.stream()
+                    .filter(sn -> sn.getName().equals(name))
+                    .filter(sl -> sl.getLastName().equals(lastName))
+                    .collect(Collectors.toList());
+
+            if (students == null) {
+                return null;
+            } else {
+                return students;
+            }*/
+        } else if (name != null) {
+            System.err.println(name);
+//            return studentRepository.findAllByName(name);
+        } else if (lastName != null) {
+            System.err.println(lastName);
+//            return studentRepository.findAllByLastName(lastName);
         } else {
-            return students;
+            return null;
         }
+
+        return null;
     }
 
     @Override
