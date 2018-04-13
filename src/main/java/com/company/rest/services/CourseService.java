@@ -8,7 +8,7 @@ public interface CourseService {
 
     Course createNewCourse(Course course);
 
-    List<Course> getAllCourses();
+    List<Course> getAllCourses(String name);
 
     Course getCourse(String name);
 
@@ -16,5 +16,4 @@ public interface CourseService {
 
     void deleteCourse(String courseName);
 
-    List<Course> getAllCoursesForTeacher(String name);
 }
