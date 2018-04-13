@@ -41,28 +41,26 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Student> getStudentsByName(String name) {
-        return studentRepository.findAllByName(name);
-    }
-
-    @Override
-    public List<Student> getStudentsByLastName(String lastName) {
-        return studentRepository.findAllByLastName(lastName);
-    }
-
-    @Override
     public List<Student> getStudentsByNameAndLastName(String name, String lastName) {
         List<Student> studentList = studentRepository.findAll();
 
-        final List<Student> students = studentList.stream()
-                .filter(s -> s.getName().equals(name))
-                .filter(sl -> sl.getLastName().equals(lastName))
-                .collect(Collectors.toList());
+        if (name != null && lastName != null) {
+            final List<Student> students = studentList.stream()
+                    .filter(sn -> sn.getName().equals(name))
+                    .filter(sl -> sl.getLastName().equals(lastName))
+                    .collect(Collectors.toList());
 
-        if (students == null) {
-            return null;
+            if (students == null) {
+                return null;
+            } else {
+                return students;
+            }
+        } else if (name != null) {
+            return studentRepository.findAllByName(name);
+        } else if (lastName != null) {
+            return studentRepository.findAllByLastName(lastName);
         } else {
-            return students;
+            return studentList;
         }
     }
 

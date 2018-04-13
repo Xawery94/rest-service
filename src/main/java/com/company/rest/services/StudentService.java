@@ -39,10 +39,6 @@ public interface StudentService {
 
     List<Grade> deleteGrade(String index, String courseName, Integer id);
 
-    List<Student> getStudentsByName(String name);
-
-    List<Student> getStudentsByLastName(String lastName);
-
     List<Student> getStudentsByNameAndLastName(String name, String lastName);
 
     List<Student> getStudentsByBirthday(Date date);

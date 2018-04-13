@@ -23,14 +23,8 @@ public class CourseController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Course> getAllCourses() {
-        return courseService.getAllCourses();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = "teacher")
-    public List<Course> retrieveAllCoursesForTeacher(
-            @RequestParam("teacher") String name) {
-        return courseService.getAllCoursesForTeacher(name);
+    public List<Course> getAllCourses(@RequestParam(value = "teacher", required = false) String name) {
+        return courseService.getAllCourses(name);
     }
 
     @RequestMapping(method = RequestMethod.POST)

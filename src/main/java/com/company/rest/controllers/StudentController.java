@@ -29,26 +29,9 @@ public class StudentController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<Student> retrieveAllStudents() {
-        return studentService.getAllStudents();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = "name")
-    public List<Student> retrieveAllStudentsByName(
-            @RequestParam("name") String name) {
-        return studentService.getStudentsByName(name);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = "lastName")
-    public List<Student> retrieveAllStudentsByLastName(
-            @RequestParam("lastName") String lastName) {
-        return studentService.getStudentsByLastName(lastName);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, params = {"name", "lastName"})
     public List<Student> retrieveAllStudentsByNameAndLastName(
-            @RequestParam("name") String name,
-            @RequestParam("lastName") String lastName) {
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "lastName", required = false) String lastName) {
         return studentService.getStudentsByNameAndLastName(name, lastName);
     }
 

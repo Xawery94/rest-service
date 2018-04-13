@@ -29,13 +29,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAllCourses() {
-        return courseRepository.findAll();
-    }
-
-    @Override
-    public List<Course> getAllCoursesForTeacher(String name) {
-        return courseRepository.findAllByTeacher(name);
+    public List<Course> getAllCourses(String teacher) {
+        if (teacher != null) {
+            return courseRepository.findAllByTeacher(teacher);
+        } else {
+            return courseRepository.findAll();
+        }
     }
 
     @Override
