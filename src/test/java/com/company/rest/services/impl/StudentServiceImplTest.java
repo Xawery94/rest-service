@@ -135,7 +135,7 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldAddNewGradeMin() {
-        Grade grade = new Grade(1, 2.0, date, "AAA");
+        Grade grade = new Grade(2, 2.0, date, "AAA");
         studentService.addNewGrade(index, "Spring", grade);
 
         verify(studentRepository, times(1)).save(any());

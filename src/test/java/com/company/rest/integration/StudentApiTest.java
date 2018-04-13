@@ -25,6 +25,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+@Ignore
 @RunWith(SpringRunner.class)
 @WebMvcTest(value = StudentController.class, secure = false)
 public class StudentApiTest {
