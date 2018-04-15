@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.constraints.NotNull;
@@ -28,7 +29,9 @@ public class Student {
 
     @JsonIgnore
     private List<Grade> grades;
+
     @JsonIgnore
+    @DBRef
     private List<Course> courses;
 
     public Student() {
