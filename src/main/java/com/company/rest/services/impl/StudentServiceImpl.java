@@ -190,6 +190,10 @@ public class StudentServiceImpl implements StudentService {
             return null;
         }
 
+        if (student.getCourses() == null) {
+            return null;
+        }
+
         for (Course course : student.getCourses()) {
             if (course.getName().equals(courseName)) {
                 return course;
