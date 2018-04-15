@@ -38,7 +38,7 @@ public class StudentServiceImplTest {
     private static final List<Student> expectedStudentList = new ArrayList<>();
     private static final Student expectedStudent = new Student();
     private static final List<Course> courseTemplate = new ArrayList<>(Collections.singleton(new Course(1, "Spring", "Arnold")));
-    private static final List<Grade> gradeTemplate = new ArrayList<>(Collections.singleton(new Grade(1, 2.0, new Date(), "Spring")));
+    private static final List<Grade> gradeTemplate = new ArrayList<>();
     private static final List<Course> expectedCourseList = new ArrayList<>(courseTemplate);
     private static final List<Grade> expectedGradeList = new ArrayList<>(gradeTemplate);
     private static final Date date = new Date();
@@ -50,6 +50,8 @@ public class StudentServiceImplTest {
         expectedStudent.setLastName("Kac");
         expectedStudent.setBirthday(new Date());
         expectedStudent.setCourses(courseTemplate);
+        gradeTemplate.add((new Grade(1, 2.0, new Date(), "Spring1")));
+        gradeTemplate.add((new Grade(2, 4.0, new Date(), "Spring2")));
         expectedStudent.setGrades(gradeTemplate);
 
         when(studentRepository.findOneByIndex(index)).thenReturn(expectedStudent);
@@ -135,7 +137,7 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldAddNewGradeMin() {
-        Grade grade = new Grade(2, 2.0, date, "AAA");
+        Grade grade = new Grade(443545, 2.0, date, "AAA");
         studentService.addNewGrade(index, "Spring", grade);
 
         verify(studentRepository, times(1)).save(any());
@@ -143,7 +145,7 @@ public class StudentServiceImplTest {
 
     @Test
     public void shouldAddNewGradeMax() {
-        Grade grade = new Grade(1, 5.0, date, "AAA");
+        Grade grade = new Grade(423432, 5.0, date, "AAA");
         studentService.addNewGrade(index, "Spring", grade);
 
         verify(studentRepository, times(1)).save(any());
@@ -155,7 +157,7 @@ public class StudentServiceImplTest {
     }
 
     @Test
-    public void shouldTDeleteGrade() {
+    public void shouldDeleteGrade() {
         studentService.deleteGrade(index, "Spring", 1);
 
         verify(studentRepository, times(1)).save(any());
