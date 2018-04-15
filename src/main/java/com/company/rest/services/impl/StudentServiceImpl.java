@@ -25,12 +25,10 @@ public class StudentServiceImpl implements StudentService {
     private static final Logger log = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     private StudentRepository studentRepository;
-    private CourseRepository courseRepository;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
-        this.courseRepository = courseRepository;
     }
 
     @Override
