@@ -37,7 +37,7 @@ public interface StudentService {
 
     Grade updateGrade(String index, String courseName, Integer id, Grade newGrade);
 
-    List<Grade> deleteGrade(String index, String courseName, Integer id);
+    void deleteGrade(String index, String courseName, Integer id);
 
     List<Student> getStudentsByNameAndLastName(String name, String lastName);
 

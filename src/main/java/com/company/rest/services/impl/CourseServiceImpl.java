@@ -2,6 +2,7 @@ package com.company.rest.services.impl;
 
 import com.company.rest.dao.CourseRepository;
 import com.company.rest.entity.Course;
+import com.company.rest.exceptions.CourseDataException;
 import com.company.rest.services.CourseService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,17 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course createNewCourse(Course course) {
+        if (course.getId() == null || course.getName() == null || course.getTeacher() == null) {
+            throw new CourseDataException();
+        }
+
+        Course existingCourse = courseRepository.findById(course.getId());
+
+        if (existingCourse != null) {
+            log.warn("Trying add duplicate course with index {}", course.getName());
+            return null;
+        }
+
         courseRepository.save(course);
         return course;
     }

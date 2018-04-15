@@ -161,7 +161,7 @@ public class StudentController {
                                                       @PathVariable String courseName,
                                                       @RequestBody Grade gradeBody) {
 
-        if (gradeBody.getValue() < 2.0 || gradeBody.getValue() > 5.0) {
+        if (!validateGrade(gradeBody.getValue())) {
             throw new GradeValidationException();
         }
 
@@ -176,6 +176,17 @@ public class StudentController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    private boolean validateGrade(double grade) {
+        double[] gradeList = {2.0, 3.0, 3.5, 4.0, 4.5, 5.0};
+
+        for (double pass : gradeList) {
+            if (grade == pass)
+                return true;
+        }
+
+        return false;
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses/{courseName}/grades/{id}")

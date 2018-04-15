@@ -1,5 +1,6 @@
 package com.company.rest.services.impl;
 
+import com.company.rest.dao.CourseRepository;
 import com.company.rest.dao.StudentRepository;
 import com.company.rest.entity.Course;
 import com.company.rest.entity.Grade;
@@ -24,10 +25,12 @@ public class StudentServiceImpl implements StudentService {
     private static final Logger log = LoggerFactory.getLogger(StudentServiceImpl.class);
 
     private StudentRepository studentRepository;
+    private CourseRepository courseRepository;
 
     @Autowired
-    public StudentServiceImpl(StudentRepository studentRepository) {
+    public StudentServiceImpl(StudentRepository studentRepository, CourseRepository courseRepository) {
         this.studentRepository = studentRepository;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -317,7 +320,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public List<Grade> deleteGrade(String index, String courseName, Integer id) {
+    public void deleteGrade(String index, String courseName, Integer id) {
         Student student = studentRepository.findOneByIndex(index);
         if (student == null) {
             throw new StudentDataExceptions();
@@ -331,11 +334,8 @@ public class StudentServiceImpl implements StudentService {
 
                 student.setGrades(gradeList);
                 studentRepository.save(student);
-                return gradeList;
             }
         }
-
-        return gradeList;
     }
 
     @Override
