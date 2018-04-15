@@ -8,15 +8,32 @@ Backend side for student service written in JAVA using Mongodb for storage data.
 
 ## API
 
-[GET] Requests:
-````
+[GET] Requests for student:
+```
  * /students -> List[Student]
+ * /students?name={name} -> Student by name
+ * /students?lastNmae={lastName} -> Student by lastName
+ * /students?name={name}&lastName={lastName} -> Student by name and lastName
+ * /students?birthday={Date} -> Student by birthday
+ * /students?birthdayBefore={Date} -> List{Student} birthday before putted Date
+ * /students?birthdayAfter={Date} -> List{Student} birthday after putted Date
  * /students/{index} -> {Studnet}
  * /students/{index}/courses/ -> List[Courses] for Student
  * /students/{index}/courses/{courseName}/ -> Course
  * /students/{index}/courses/{courseName}/grades -> List[Grade] for Course and Student
+ * /students/{index}/courses/{courseName}/grades?valueGrater={value} -> List[Grade] grater than Value
+ * /students/{index}/courses/{courseName}/grades?valueLess={value} -> List[Grade] less than Value
  * /students/{index}/courses/{courseName}/grades/{value} -> List[Grade] for Course and Student
-````
+```
+
+[GET] Requests for course:
+```
+* /courses -> List{Course}
+* /courses?teacher={name} -> Course
+```
+
+
+
 ---
 
 ## Example response for 
@@ -28,26 +45,7 @@ Backend side for student service written in JAVA using Mongodb for storage data.
     "index": "123456",
     "name": "Jan",
     "lastName": "Kowalski",
-    "birthday": "2000-10-20T00:00:00.000+0000",
-    "grades": [
-        {
-            "value": 4.5,
-            "date": "2018-03-31T17:55:05.791+0000",
-            "courseName": "Spring"
-        },
-        {
-            "value": 4.5,
-            "date": "2018-03-31T17:55:06.479+0000",
-            "courseName": "Spring"
-        }
-    ],
-    "courses": [
-        {
-            "id": "1",
-            "name": "Spring",
-            "teacher": "Stefan"
-        }
-    ]
+    "birthday": "2000-10-20"
 }
 ```
 
@@ -56,25 +54,6 @@ Backend side for student service written in JAVA using Mongodb for storage data.
     <index>123456</index>
     <name>Jan</name>
     <lastName>Kowalski</lastName>
-    <birthday>2000-10-20T00:00:00.000+0000</birthday>
-    <grades>
-        <grades>
-            <value>4.5</value>
-            <date>2018-03-31T17:55:05.791+0000</date>
-            <courseName>Spring</courseName>
-        </grades>
-        <grades>
-            <value>4.5</value>
-            <date>2018-03-31T17:55:06.479+0000</date>
-            <courseName>Spring</courseName>
-        </grades>
-    </grades>
-    <courses>
-        <courses>
-            <id>1</id>
-            <name>Spring</name>
-            <teacher>Stefan</teacher>
-        </courses>
-    </courses>
+    <birthday>2000-10-20</birthday>
 </Student>
 ```
