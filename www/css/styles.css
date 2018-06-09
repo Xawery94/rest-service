@@ -188,6 +188,12 @@ tr:nth-child(even) {
     }
 }
 
+@media screen and (max-width: 600px) {
+    #topbarL {
+        display: none;
+    }
+}
+
 @media print {
     h1, h2, h3 {
         color: black;
