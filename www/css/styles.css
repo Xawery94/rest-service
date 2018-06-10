@@ -89,7 +89,7 @@ th > button > img {
 }
 
 .table:target {
-    display: inherit;
+    display: block;
 }
 
 table {
@@ -122,11 +122,15 @@ table tr:hover {
     cursor: pointer;
 }
 
+table tr {
+    height: 35px;
+}
+
 td > input[type="text"], input[type="date"], input[type="number"], select {
-    border-color: #1C6EA4;
-    background: #eee;
+    border-color: transparent;
+    background: transparent;
     width: 100%;
-    height: 100%;
+    height: auto;
     text-align: center;
 }
 
@@ -216,7 +220,11 @@ tr:nth-child(even) {
     }
 
     select {
-        display: none;
+        border: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        text-indent: 1px;
+        text-overflow: '';
     }
 
     table {
