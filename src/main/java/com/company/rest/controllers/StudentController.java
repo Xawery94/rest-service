@@ -17,6 +17,7 @@ import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/students")
 public class StudentController {
