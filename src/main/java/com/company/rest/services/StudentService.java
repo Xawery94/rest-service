@@ -50,4 +50,6 @@ public interface StudentService {
     List<Grade> retrieveGradeGraterThan(String index, String courseName, double value);
 
     List<Grade> retrieveGradeLessThan(String index, String courseName, double value);
+
+    List<Grade> retrieveAllGrade(String index);
 }

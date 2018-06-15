@@ -59,7 +59,7 @@ public class StudentController {
         Student student = studentService.addStudent(studentBody);
 
         if (student == null)
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().build();
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{index}")
@@ -94,6 +94,11 @@ public class StudentController {
     @RequestMapping(method = RequestMethod.GET, value = "/{index}/courses")
     public List<Course> retrieveCoursesForStudent(@PathVariable String index) {
         return studentService.retrieveAllCourses(index);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{index}/grades")
+    public List<Grade> retrieveAllGradesForStudent(@PathVariable String index) {
+        return studentService.retrieveAllGrade(index);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/{index}/courses")

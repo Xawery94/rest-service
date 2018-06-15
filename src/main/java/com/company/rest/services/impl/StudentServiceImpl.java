@@ -1,6 +1,5 @@
 package com.company.rest.services.impl;
 
-import com.company.rest.dao.CourseRepository;
 import com.company.rest.dao.StudentRepository;
 import com.company.rest.entity.Course;
 import com.company.rest.entity.Grade;
@@ -131,6 +130,17 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public List<Grade> retrieveAllGrade(String index) {
+        Student student = studentRepository.findOneByIndex(index);
+
+        if (student.getGrades() == null) {
+            return null;
+        }
+
+        return student.getGrades();
+    }
+
+    @Override
     public Student addStudent(Student body) {
         if (body.getIndex() == null || body.getName() == null || body.getLastName() == null || body.getBirthday().toString() == null) {
             throw new StudentDataExceptions();
@@ -138,7 +148,7 @@ public class StudentServiceImpl implements StudentService {
 
         Student existingStudent = studentRepository.findOneByIndex(body.getIndex());
 
-        if (existingStudent != null) {
+        if (existingStudent == null) {
             try {
                 studentRepository.save(body);
             } catch (Exception exc) {
@@ -146,10 +156,9 @@ public class StudentServiceImpl implements StudentService {
                 return null;
             }
             return body;
+        } else {
+            return null;
         }
-
-        studentRepository.save(body);
-        return body;
     }
 
     @Override

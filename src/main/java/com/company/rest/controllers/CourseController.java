@@ -34,7 +34,7 @@ public class CourseController {
         Course course = courseService.createNewCourse(newCourse);
 
         if (course == null)
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.badRequest().build();
 
         URI location = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{name}")
