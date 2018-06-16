@@ -12,8 +12,8 @@ public interface CourseService {
 
     Course getCourse(String name);
 
-    Course updateCourse(String courseName, Course newCourse);
+    Course updateCourse(int id, Course newCourse);
 
-    void deleteCourse(String courseName);
+    void deleteCourse(int id);
 
 }

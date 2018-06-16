@@ -54,15 +54,15 @@ public class CourseController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{name}")
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Course updateCourse(@PathVariable String name, @RequestBody Course newCourse) {
-        return courseService.updateCourse(name, newCourse);
+    public Course updateCourse(@PathVariable int id, @RequestBody Course newCourse) {
+        return courseService.updateCourse(id, newCourse);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{name}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCourse(@PathVariable String name) {
-        courseService.deleteCourse(name);
+    public void deleteCourse(@PathVariable int id) {
+        courseService.deleteCourse(id);
     }
 }

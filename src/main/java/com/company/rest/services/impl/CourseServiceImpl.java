@@ -55,8 +55,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course updateCourse(String courseName, Course newCourse) {
-        Course course = courseRepository.findFirstByName(courseName);
+    public Course updateCourse(int id, Course newCourse) {
+        Course course = courseRepository.findFirstById(id);
         course.setName(newCourse.getName());
         course.setTeacher(newCourse.getTeacher());
 
@@ -65,8 +65,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(String courseName) {
-        courseRepository.deleteByName(courseName);
+    public void deleteCourse(int id) {
+        courseRepository.deleteById(id);
     }
 
 }
