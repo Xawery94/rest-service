@@ -13,9 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -334,15 +332,16 @@ public class StudentServiceImpl implements StudentService {
         }
 
         List<Grade> gradeList = student.getGrades();
+        List<Grade> tempList = new ArrayList<>();
 
         for (Grade grade : gradeList) {
-            if (grade.getId().equals(id)) {
-                gradeList.remove(grade);
-
-                student.setGrades(gradeList);
-                studentRepository.save(student);
+            if (!grade.getId().equals(id)) {
+                tempList.add(grade);
             }
         }
+
+        student.setGrades(tempList);
+        studentRepository.save(student);
     }
 
     @Override
